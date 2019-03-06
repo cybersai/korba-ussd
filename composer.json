@@ -1,0 +1,23 @@
+{
+    "name": "cybersai/cherry",
+    "description": "A library to ease with building USSD.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "CyberSai",
+            "email": "isaacsai030@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.1@dev"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    }
+}
