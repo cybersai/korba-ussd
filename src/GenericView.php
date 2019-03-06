@@ -10,9 +10,9 @@
  */
 
 class GenericView {
-    /** @var string */
+    /** @var string|string[] */
     private $content;
-    /** @var string */
+    /** @var string|string[] */
     private $next;
     /** @var integer */
     private $page;
@@ -27,18 +27,18 @@ class GenericView {
 
     /**
      * View constructor.
-     * @param string $content
-     * @param string $next
+     * @param string|string[] $content
+     * @param string|string[] $next
      * @param integer $page
      * @param integer $number_per_page
-     * @param object[] $iterable_list
+     * @param object[]|string[] $iterable_list
      * @param string[] $iterator
      * @param string $end
      */
     public function __construct($content , $next, $page = 1, $number_per_page = null, $iterable_list = null, $iterator = null, $end = null)
     {
         $this->content = $content;
-        $this->next = strtoupper($next);
+        $this->next = (gettype($next) == 'array' ? array_map('strtoupper', $next): strtoupper($next));
         $this->page = intval($page);
         $this->number_per_page = intval($number_per_page);
         $this->iterable_list = $iterable_list;
@@ -51,6 +51,9 @@ class GenericView {
      */
     public function getContent()
     {
+        if (gettype($this->content == 'array')) {
+            return $this->content[$this->page - 1];
+        }
         return $this->content;
     }
 
@@ -59,6 +62,9 @@ class GenericView {
      */
     public function getNext()
     {
+        if (gettype($this->next == 'array')) {
+            return $this->next[$this->page - 1];
+        }
         return $this->next;
     }
 
@@ -108,7 +114,7 @@ class GenericView {
     public function parseToString()
     {
         $msg = "";
-        $msg .= "{$this->content}\n";
+        $msg .= "{$this->getContent()}\n";
         $msg .= $this->makeList();
         return $msg;
     }
