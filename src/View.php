@@ -129,15 +129,18 @@ class View {
         $msg = "";
         if ($this->page != null &&
             $this->number_per_page != null &&
-            $this->iterable_list != null &&
-            $this->iterator != null) {
+            $this->iterable_list != null) {
             $limit = ($this->page * $this->number_per_page <= count($this->iterable_list)) ? $this->number_per_page : (count($this->iterable_list) - ($this->page * $this->number_per_page - $this->number_per_page));
             $is_last_page = ($this->page * $this->number_per_page < count($this->iterable_list)) ? false : true;
             $is_first_page = ($this->page == 1) ? true : false;
             $start_index = $this->number_per_page * $this->page - $this->number_per_page;
             for($i = $start_index;$i < $limit;$i++) {
                 $num = $i + 1;
-                $msg .= "{$num}.{$this->iterable_list[$i][$this->iterator[1]]}\n";
+                if ($this->iterator == null) {
+                    $msg .= "{$num}.{$this->iterable_list[$i]}\n";
+                } else {
+                    $msg .= "{$num}.{$this->iterable_list[$i][$this->iterator[1]]}\n";
+                }
             }
             return $msg;
         }

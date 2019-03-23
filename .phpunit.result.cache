@@ -1,1 +1,0 @@
-C:30:"PHPUnit\Runner\TestResultCache":116:{a:2:{s:7:"defects";a:1:{s:22:"FooTest::test_it_works";i:5;}s:5:"times";a:1:{s:22:"FooTest::test_it_works";d:0.418;}}}
