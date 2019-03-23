@@ -5,6 +5,12 @@ namespace Korba;
 
 final class Util
 {
+    /**
+     * Prevent creating an object
+     *  from this class
+     */
+    private function __construct(){ }
+
     /** @var int */
     const TERMINATION_CODE = 17;
 
@@ -50,5 +56,59 @@ final class Util
      */
     public static function numberIntFormat($number) {
         return preg_replace('/^0/', '+233', $number);
+    }
+
+    /**
+     * @param string $key
+     * @param string $target
+     * @param array[] $history
+     * @param string $option
+     */
+    public static function processBack($key, $target, &$history, &$option) {
+        if ($target === $key) {
+            if (count($history) > 1) {
+                array_pop($history);
+                $index = count($history)  - 1;
+                $option = $history[$index]->{'option'};
+                array_pop($history);
+            } else if (count($history) == 1) {
+                $option = $history[0]->{'option'};
+                array_pop($history);
+            }
+        }
+    }
+
+    /**
+     * @param string $key
+     * @param string $target
+     * @param array[] $history
+     * @param string $option
+     */
+    public static function processNext($key, &$target, &$history, &$option) {
+        if ($target === $key) {
+            if (count($history) > 0) {
+                $index = count($history)  - 1;
+                $option = $history[$index]->{'option'};
+                array_pop($history);
+                $target++;
+            }
+        }
+    }
+
+    /**
+     * @param string $key
+     * @param string $target
+     * @param array[] $history
+     * @param string $option
+     */
+    public static function processPrevious($key, &$target, &$history, &$option) {
+        if ($target === $key) {
+            if (count($history) > 0) {
+                $index = count($history)  - 1;
+                $option = $history[$index]->{'option'};
+                array_pop($history);
+                $target--;
+            }
+        }
     }
 }

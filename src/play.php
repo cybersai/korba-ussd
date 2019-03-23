@@ -11,3 +11,9 @@ echo '<br/>';
 echo $view->getNext();
 echo '<br/>';
 echo \Korba\Util::random();
+
+$history = [['param' => null, 'option' => 'MENU'],['param' => '1', 'option' => 'SPECIFIC'], ['param' => '1', 'option' => 'AIRTIME']];
+$n = 3;
+$hist = \Korba\Util::processNext("#", $n, $history);
+print_r($history);
+echo $n;
