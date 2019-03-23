@@ -1,4 +1,6 @@
-<?php namespace Korba;
+<?php
+
+namespace Korba;
 
 /**
  * @todo
@@ -9,7 +11,7 @@
  * add a parameter to specify use input
  */
 
-class GenericView {
+class View {
     /** @var string|string[] */
     private $content;
     /** @var string|string[] */
@@ -33,7 +35,7 @@ class GenericView {
      * @param integer $number_per_page
      * @param object[]|string[] $iterable_list
      * @param string[] $iterator
-     * @param string $end
+     * @param string|string[] $end
      */
     public function __construct($content , $next, $page = 1, $number_per_page = null, $iterable_list = null, $iterator = null, $end = null)
     {
@@ -51,7 +53,7 @@ class GenericView {
      */
     public function getContent()
     {
-        if (gettype($this->content == 'array')) {
+        if (gettype($this->content) === 'array') {
             return $this->content[$this->page - 1];
         }
         return $this->content;
@@ -62,7 +64,7 @@ class GenericView {
      */
     public function getNext()
     {
-        if (gettype($this->next == 'array')) {
+        if (gettype($this->next)  === 'array') {
             return $this->next[$this->page - 1];
         }
         return $this->next;
@@ -105,6 +107,9 @@ class GenericView {
      */
     public function getEnd()
     {
+        if (gettype($this->end)  === 'array') {
+            return $this->end[$this->page - 1];
+        }
         return $this->end;
     }
 
@@ -113,10 +118,7 @@ class GenericView {
      */
     public function parseToString()
     {
-        $msg = "";
-        $msg .= "{$this->getContent()}\n";
-        $msg .= $this->makeList();
-        return $msg;
+        return "{$this->getContent()}\n{$this->makeList()}\n{$this->getEnd()}";
     }
 
     /**

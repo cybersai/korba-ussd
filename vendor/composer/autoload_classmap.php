@@ -7,7 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Help' => $vendorDir . '/phpunit/phpunit/src/Util/Help.php',
-    'Korba\\GenericView' => $baseDir . '/src/GenericView.php',
+    'Korba\\View' => $baseDir . '/src/View.php',
     'PHPUnit\\Exception' => $vendorDir . '/phpunit/phpunit/src/Exception.php',
     'PHPUnit\\Framework\\Assert' => $vendorDir . '/phpunit/phpunit/src/Framework/Assert.php',
     'PHPUnit\\Framework\\AssertionFailedError' => $vendorDir . '/phpunit/phpunit/src/Framework/AssertionFailedError.php',
