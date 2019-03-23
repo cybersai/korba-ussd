@@ -67,8 +67,8 @@ class ComposerStaticInit2b07cfbc016303a51aceb3f94f93a6fc
     public static $classMap = array (
         'Help' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Help.php',
         'Korba\\Menu' => __DIR__ . '/../..' . '/src/Menu.php',
+        'Korba\\Util' => __DIR__ . '/../..' . '/src/Util.php',
         'Korba\\View' => __DIR__ . '/../..' . '/src/View.php',
-        'Korba\\ViewGroup' => __DIR__ . '/../..' . '/src/ViewGroup.php',
         'PHPUnit\\Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert.php',
         'PHPUnit\\Framework\\AssertionFailedError' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/AssertionFailedError.php',

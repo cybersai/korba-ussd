@@ -9,4 +9,5 @@ $view =  new \Korba\Menu(['Welcome to my Usssd libray', 'Good to be here'], ['ai
 echo $view->parseToString();
 echo '<br/>';
 echo $view->getNext();
-
+echo '<br/>';
+echo \Korba\Util::random();
