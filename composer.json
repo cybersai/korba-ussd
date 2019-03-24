@@ -1,5 +1,5 @@
 {
-    "name": "cybersai/cherry",
+    "name": "cybersai/korba-ussd",
     "description": "A library to ease with building USSD.",
     "type": "library",
     "license": "MIT",
@@ -13,7 +13,6 @@
     "require": {
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.1@dev"
     },
     "autoload": {
         "classmap": [

@@ -2,7 +2,6 @@
 
 namespace Korba;
 
-
 final class Util
 {
     /**
@@ -123,10 +122,18 @@ final class Util
         }
     }
 
+    /**
+     * @param string $number
+     * @return boolean
+     */
     public static function verifyPhoneNumber($number) {
         return preg_match("/^[0][0-9]{9}$/", $number) ? true : false;
     }
 
+    /**
+     * @param string $amount
+     * @return boolean
+     */
     public static function verifyAmount($amount) {
         return preg_match('/^[0-9]+(?:\.[0-9]{1,2})?$/', $amount) ? true : false;
     }

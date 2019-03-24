@@ -2,7 +2,6 @@
 
 namespace Korba;
 
-
 class Menu extends View
 {
     public function __construct()
