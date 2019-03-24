@@ -111,4 +111,23 @@ final class Util
             }
         }
     }
+
+    /**
+     * @param string[] $keys
+     * @param string $value
+     * @param integer $target
+     */
+    public static function processReset($keys, $value, &$target) {
+        if (!in_array($value, $keys)) {
+            $target = 1;
+        }
+    }
+
+    public static function verifyPhoneNumber($number) {
+        return preg_match("/^[0][0-9]{9}$/", $number) ? true : false;
+    }
+
+    public static function verifyAmount($amount) {
+        return preg_match('/^[0-9]+(?:\.[0-9]{1,2})?$/', $amount) ? true : false;
+    }
 }
