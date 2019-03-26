@@ -6,7 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Korba\\Menu' => $baseDir . '/src/Menu.php',
+    'Korba\\Generator' => $baseDir . '/src/Generator.php',
+    'Korba\\Param' => $baseDir . '/src/Param.php',
     'Korba\\Util' => $baseDir . '/src/Util.php',
     'Korba\\View' => $baseDir . '/src/View.php',
 );
