@@ -165,4 +165,12 @@ final class Util
             Param::TRANSACTION_ID => Util::random()
         ];
     }
+
+    /**
+     * @param \stdClass $request
+     * @return bool
+     */
+    public static function isInitialRequest($request) {
+        return ($request->ussdServiceString == 1 ? true : false);
+    }
 }
