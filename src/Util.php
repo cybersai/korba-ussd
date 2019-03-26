@@ -65,6 +65,7 @@ final class Util
      */
     public static function processBack($key, $value, &$history, &$option) {
         if ($value === $key) {
+            array_pop($history);
             if (count($history) > 1) {
                 array_pop($history);
                 $index = count($history)  - 1;
@@ -87,6 +88,7 @@ final class Util
     public static function processNext($key, $value, &$target, &$history, &$option) {
         if ($value === $key) {
             if (count($history) > 0) {
+                array_pop($history);
                 $index = count($history)  - 1;
                 $option = $history[$index]->{'option'};
                 array_pop($history);
@@ -105,6 +107,7 @@ final class Util
     public static function processPrevious($key, $value, &$target, &$history, &$option) {
         if ($value === $key) {
             if (count($history) > 0) {
+                array_pop($history);
                 $index = count($history)  - 1;
                 $option = $history[$index]->{'option'};
                 array_pop($history);
