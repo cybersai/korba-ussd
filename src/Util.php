@@ -181,4 +181,24 @@ final class Util
     public static function getRequestSessionId($request) {
         return $request->sessionID;
     }
+
+    /**
+     * @param string $history
+     * @return array
+     */
+    public static function parseHistoryToArray($history) {
+        return (array)json_decode($history);
+    }
+
+    /**
+     * @param View $response
+     * @param integer $code
+     * @return array
+     */
+    public static function parseResponseToArray($response, $code) {
+        return [
+            'message' => $response->parseToString(),
+            'ussdServiceOp' => $code
+        ];
+    }
 }
