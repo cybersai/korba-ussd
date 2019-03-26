@@ -173,4 +173,12 @@ final class Util
     public static function isInitialRequest($request) {
         return ($request->ussdServiceString == 1 ? true : false);
     }
+
+    /**
+     * @param \stdClass $request
+     * @return string
+     */
+    public static function getRequestSessionId($request) {
+        return $request->sessionID;
+    }
 }
