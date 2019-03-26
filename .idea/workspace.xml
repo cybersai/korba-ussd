@@ -25,7 +25,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Util.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-900">
+            <state relative-caret-position="-340">
               <caret line="67" column="32" selection-start-line="67" selection-start-column="32" selection-end-line="67" selection-end-column="32" />
             </state>
           </provider>
@@ -197,7 +197,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57379000" />
+    <option name="totallyTimeSpent" value="57122000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -233,13 +233,6 @@
     <entry file="file://$PROJECT_DIR$/tests/FooTest.php" />
     <entry file="file://$PROJECT_DIR$/phpunit.xml" />
     <entry file="file://$PROJECT_DIR$/src/Thanks.php" />
-    <entry file="file://$PROJECT_DIR$/src/View.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="11" column="3" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Menu.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
@@ -264,16 +257,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/play.php">
+    <entry file="file://$PROJECT_DIR$/src/View.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="20" column="35" selection-start-line="20" selection-start-column="35" selection-end-line="20" selection-end-column="35" />
+        <state relative-caret-position="220">
+          <caret line="11" column="3" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Util.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-900">
+        <state relative-caret-position="-340">
           <caret line="67" column="32" selection-start-line="67" selection-start-column="32" selection-end-line="67" selection-end-column="32" />
         </state>
       </provider>
