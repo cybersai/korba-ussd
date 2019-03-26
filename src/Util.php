@@ -143,7 +143,15 @@ final class Util
         return preg_match('/^[0-9]+(?:\.[0-9]{1,2})?$/', $amount) ? true : false;
     }
 
-    public static function requestToHashedMapArray($request, $response, $option, $auth = null, $type = null) {
+    /**
+     * @param \stdClass $request
+     * @param View $response
+     * @param string $option
+     * @param null|string $auth
+     * @param null|string $type
+     * @return array
+     */
+    public static function requestToHashedMapArray($request, $response, $option = "MAIN_MENU", $auth = null, $type = null) {
         return [
             Param::PHONE_NUMBER => $request->msisdn,
             Param::SESSION_ID => $request->sessionID,

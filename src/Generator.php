@@ -28,7 +28,7 @@ class Generator
     }
 
     /**
-     * @param $table
+     * @param \stdClass $table
      */
     public static function createTableDefaultParameters(&$table) {
         $table->string(Param::SESSION_ID)->unique();
