@@ -171,7 +171,7 @@ final class Util
      * @return bool
      */
     public static function isInitialRequest($request) {
-        return ($request->ussdServiceString == 1 ? true : false);
+        return ($request->ussdServiceOp == 1 ? true : false);
     }
 
     /**
