@@ -38,7 +38,7 @@ final class Util
      * @return string
      */
     public static function random() {
-        return rand(1000, 10000).rand(1000, 10000).rand(1000, 10000);
+        return rand(1000, 10000).rand(1000, 10000).rand(1000, 10000).rand(1000, 10000);
     }
 
     /**
@@ -141,5 +141,11 @@ final class Util
      */
     public static function verifyAmount($amount) {
         return preg_match('/^[0-9]+(?:\.[0-9]{1,2})?$/', $amount) ? true : false;
+    }
+
+    public static function requestToHashedMapArray($request) {
+        return [
+            'phone_number'
+        ];
     }
 }

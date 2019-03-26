@@ -4,10 +4,6 @@ namespace Korba;
 
 /**
  * @todo
- * content could be array
- * next could also be array
- * check if it an array or string
- * and use accordingly
  * add a parameter to specify use input
  */
 
