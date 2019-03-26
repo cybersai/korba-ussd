@@ -21,4 +21,5 @@ class Param
     const AUTHORIZATION = 'authorization';
     const TYPE = 'type';
     const TRANSACTION_ID = 'transaction_id';
+    const PARAM = "param";
 }

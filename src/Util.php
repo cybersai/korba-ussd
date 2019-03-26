@@ -143,9 +143,18 @@ final class Util
         return preg_match('/^[0-9]+(?:\.[0-9]{1,2})?$/', $amount) ? true : false;
     }
 
-    public static function requestToHashedMapArray($request) {
+    public static function requestToHashedMapArray($request, $response, $option, $auth = null, $type = null) {
         return [
-            'phone_number'
+            Param::PHONE_NUMBER => $request->msisdn,
+            Param::SESSION_ID => $request->sessionID,
+            Param::NETWORK => Util::codeToNetwork($request->network),
+            Param::OPTION => $response->getNext(),
+            Param::TYPE => $type,
+            Param::AUTHORIZATION => $auth,
+            Param::HISTORY => json_encode([
+                [Param::PARAM => 'null', Param::OPTION => $option]
+            ]),
+            Param::TRANSACTION_ID => Util::random()
         ];
     }
 }

@@ -11,6 +11,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
+        "ext-json": "*"
     },
     "require-dev": {
     },
