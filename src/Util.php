@@ -201,4 +201,17 @@ final class Util
             'ussdServiceOp' => $code
         ];
     }
+
+    /**
+     * @param array $history
+     * @param string $input
+     * @param string $option
+     */
+    public static function appendHistory(&$history, $input, $option) {
+        array_push($history, [
+                'param' => $input,
+                'option' => $option
+            ]
+        );
+    }
 }
