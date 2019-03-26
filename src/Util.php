@@ -59,12 +59,12 @@ final class Util
 
     /**
      * @param string $key
-     * @param string $target
+     * @param string $value
      * @param array[] $history
      * @param string $option
      */
-    public static function processBack($key, $target, &$history, &$option) {
-        if ($target === $key) {
+    public static function processBack($key, $value, &$history, &$option) {
+        if ($value === $key) {
             if (count($history) > 1) {
                 array_pop($history);
                 $index = count($history)  - 1;
@@ -79,12 +79,13 @@ final class Util
 
     /**
      * @param string $key
+     * @param string $value
      * @param string $target
      * @param array[] $history
      * @param string $option
      */
-    public static function processNext($key, &$target, &$history, &$option) {
-        if ($target === $key) {
+    public static function processNext($key, $value, &$target, &$history, &$option) {
+        if ($value === $key) {
             if (count($history) > 0) {
                 $index = count($history)  - 1;
                 $option = $history[$index]->{'option'};
@@ -96,12 +97,13 @@ final class Util
 
     /**
      * @param string $key
+     * @param string $value
      * @param string $target
      * @param array[] $history
      * @param string $option
      */
-    public static function processPrevious($key, &$target, &$history, &$option) {
-        if ($target === $key) {
+    public static function processPrevious($key, $value, &$target, &$history, &$option) {
+        if ($value === $key) {
             if (count($history) > 0) {
                 $index = count($history)  - 1;
                 $option = $history[$index]->{'option'};
