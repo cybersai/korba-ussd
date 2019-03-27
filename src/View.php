@@ -141,4 +141,28 @@ class View {
             return $msg;
         }
     }
+
+    /**
+     * @param integer $page
+     * @param integer $number_per_page
+     * @param string[]|array[] $array
+     * @param null|string[] $nested_indices
+     * @return string
+     */
+    public static function arrayToList($page, $number_per_page, $array, $nested_indices = null) {
+        $msg = "";
+        $limit = ($page * $number_per_page <= count($array)) ? $number_per_page : (count($array) - ($page * $number_per_page - $number_per_page));
+        $is_last_page = ($page * $number_per_page < count($array)) ? false : true;
+        $is_first_page = ($page == 1) ? true : false;
+        $start_index = $number_per_page * $page - $number_per_page;
+        for($i = $start_index;$i < $limit;$i++) {
+            $num = $i + 1;
+            if ($nested_indices == null) {
+                $msg .= "{$num}.{$array[$i]}\n";
+            } else {
+                $msg .= "{$num}.{$array[$i][$nested_indices[1]]}\n";
+            }
+        }
+        return $msg;
+    }
 }

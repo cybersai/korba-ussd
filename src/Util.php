@@ -144,7 +144,7 @@ final class Util
     }
 
     /**
-     * @param \stdClass $request
+     * @param $request
      * @param View $response
      * @param string $option
      * @param null|string $auth
@@ -167,7 +167,7 @@ final class Util
     }
 
     /**
-     * @param \stdClass $request
+     * @param $request
      * @return bool
      */
     public static function isInitialRequest($request) {
@@ -175,7 +175,7 @@ final class Util
     }
 
     /**
-     * @param \stdClass $request
+     * @param $request
      * @return string
      */
     public static function getRequestSessionId($request) {
