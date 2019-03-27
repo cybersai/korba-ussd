@@ -23,6 +23,10 @@ class View {
     /** @var string */
     private $end;
 
+    public static $processNext = null;
+    public static $processBack = null;
+    public static $processPrevious = null;
+
     /**
      * View constructor.
      * @param string|string[] $content
@@ -130,12 +134,22 @@ class View {
             $is_last_page = ($this->page * $this->number_per_page < count($this->iterable_list)) ? false : true;
             $is_first_page = ($this->page == 1) ? true : false;
             $start_index = $this->number_per_page * $this->page - $this->number_per_page;
-            for($i = $start_index;$i < $limit;$i++) {
-                $num = $i + 1;
+            for($i = 0;$i < $limit;$i++) {
+                $num = $i + $start_index + 1;
                 if ($this->iterator == null) {
-                    $msg .= "{$num}.{$this->iterable_list[$i]}\n";
+                    $msg .= "{$num}.{$this->iterable_list[$i + $start_index]}\n";
                 } else {
-                    $msg .= "{$num}.{$this->iterable_list[$i][$this->iterator[1]]}\n";
+                    $msg .= "{$num}.{$this->iterable_list[$i + $start_index][$this->iterator[1]]}\n";
+                }
+            }
+            if (self::$processNext) {
+                if (!$is_last_page) {
+                    $msg .= self::$processNext."."."Next Page\n";
+                }
+            }
+            if (self::$processPrevious) {
+                if (!$is_first_page) {
+                    $msg .= self::$processPrevious."."."Previous Page\n";
                 }
             }
             return $msg;
@@ -155,14 +169,76 @@ class View {
         $is_last_page = ($page * $number_per_page < count($array)) ? false : true;
         $is_first_page = ($page == 1) ? true : false;
         $start_index = $number_per_page * $page - $number_per_page;
-        for($i = $start_index;$i < $limit;$i++) {
-            $num = $i + 1;
+        for($i = 0;$i < $limit;$i++) {
+            $num = $i + $start_index + 1;
             if ($nested_indices == null) {
-                $msg .= "{$num}.{$array[$i]}\n";
+                $msg .= "{$num}.{$array[$i + $start_index]}\n";
             } else {
-                $msg .= "{$num}.{$array[$i][$nested_indices[1]]}\n";
+                $msg .= "{$num}.{$array[ + $start_index][$nested_indices[1]]}\n";
+            }
+        }
+        if (self::$processNext) {
+            if (!$is_last_page) {
+                $msg .= self::$processNext."."."Next Page\n";
+            }
+        }
+        if (self::$processPrevious) {
+            if (!$is_first_page) {
+                $msg .= self::$processPrevious."."."Previous Page\n";
+            }
+        }
+        if (self::$processNext) {
+            if (!$is_last_page) {
+                $msg .= self::$processNext."."."Next Page\n";
+            }
+        }
+        if (self::$processPrevious) {
+            if (!$is_first_page) {
+                $msg .= self::$processPrevious."."."Previous Page\n";
             }
         }
         return $msg;
+    }
+
+    /**
+     * @param string $key
+     */
+    public static function setProcessNext($key) {
+        self::$processNext = $key;
+    }
+
+    /**
+     * @param string $key
+     */
+    public static function setProcessBack($key) {
+        self::$processBack = $key;
+    }
+
+    /**
+     * @param string $key
+     */
+    public static function setProcessPrevious($key) {
+        self::$processPrevious = $key;
+    }
+
+    /**
+     * @return null|string
+     */
+    public static function getProcessNext() {
+        return self::$processNext;
+    }
+
+    /**
+     * @return null|string
+     */
+    public static function getProcessBack() {
+        return self::$processBack;
+    }
+
+    /**
+     * @return null|string
+     */
+    public static function getProcessPrevious() {
+        return self::$processPrevious;
     }
 }
