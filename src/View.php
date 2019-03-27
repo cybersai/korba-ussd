@@ -24,11 +24,11 @@ class View {
     private $end;
 
     /** @var null|string */
-    public static $processNext = null;
+    private static $processNext = null;
     /** @var null|string */
-    public static $processBack = null;
+    private static $processBack = null;
     /** @var null|string */
-    public static $processPrevious = null;
+    private static $processPrevious = null;
 
     /**
      * View constructor.
