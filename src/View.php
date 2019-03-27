@@ -23,8 +23,11 @@ class View {
     /** @var string */
     private $end;
 
+    /** @var null|string */
     public static $processNext = null;
+    /** @var null|string */
     public static $processBack = null;
+    /** @var null|string */
     public static $processPrevious = null;
 
     /**
