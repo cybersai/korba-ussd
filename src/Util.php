@@ -128,6 +128,22 @@ final class Util
     }
 
     /**
+     * @param string $key
+     * @param string $value
+     * @param array[] $history
+     * @param string $option
+     */
+    public static function processBeginning($key, &$value, &$history, &$option) {
+        if ($value === $key) {
+            if (count($history) > 0) {
+                $option = $history[0]->{'option'};
+                $value = $history[0]->{'param'};
+                $history = array();
+            }
+        }
+    }
+
+    /**
      * @param string $number
      * @return boolean
      */

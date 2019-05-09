@@ -7,6 +7,7 @@ namespace Composer\Autoload;
 class ComposerStaticInit2b07cfbc016303a51aceb3f94f93a6fc
 {
     public static $classMap = array (
+        'Korba\\Collection' => __DIR__ . '/../..' . '/src/Collection.php',
         'Korba\\Generator' => __DIR__ . '/../..' . '/src/Generator.php',
         'Korba\\Param' => __DIR__ . '/../..' . '/src/Param.php',
         'Korba\\Util' => __DIR__ . '/../..' . '/src/Util.php',

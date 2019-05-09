@@ -29,6 +29,8 @@ class View {
     private static $processBack = null;
     /** @var null|string */
     private static $processPrevious = null;
+    /** @var null|string */
+    private static $processBeginning = null;
 
     /**
      * View constructor.
@@ -225,6 +227,13 @@ class View {
     }
 
     /**
+     * @param string $key
+     */
+    public static function setProcessBeginning($key) {
+        self::$processBeginning = $key;
+    }
+
+    /**
      * @return null|string
      */
     public static function getProcessNext() {
@@ -243,5 +252,12 @@ class View {
      */
     public static function getProcessPrevious() {
         return self::$processPrevious;
+    }
+
+    /**
+     * @return null|string
+     */
+    public static function getProcessBeginning() {
+        return self::$processBeginning;
     }
 }
