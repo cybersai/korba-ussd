@@ -230,4 +230,27 @@ final class Util
             ]
         );
     }
+
+    /**
+     * @param string $key
+     * @param string $value
+     * @param array[] $history
+     * @param string $option
+     * @param string $from
+     * @param string $to
+     */
+    public static function reverse($key, &$value, &$history, &$option, $from, $to) {
+        if ($value === $key && $from === $option) {
+            for($i = count($history) - 1;$i >= 1;$i--) {
+                if ($history[$i]->{'option'} === $to) {
+                    $option = $history[$i]->{'option'};
+                    $value = $history[$i]->{'param'};
+                    array_pop($history);
+                    break;
+                } else {
+                    array_pop($history);
+                }
+            }
+        }
+    }
 }
