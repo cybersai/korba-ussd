@@ -18,9 +18,9 @@ class View {
     private $number_per_page;
     /** @var object[]|string[] */
     private $iterable_list;
-    /** @var string[] */
+    /** @var string[]|object[] */
     private $iterator;
-    /** @var string */
+    /** @var string|string[] */
     private $end;
 
     /** @var null|string */
@@ -144,6 +144,7 @@ class View {
                 if ($this->iterator == null) {
                     $msg .= "{$num}.{$this->iterable_list[$i + $start_index]}\n";
                 } else {
+                    // TODO iterator can take string
                     $msg .= "{$num}.{$this->iterable_list[$i + $start_index][$this->iterator[1]]}\n";
                 }
             }
