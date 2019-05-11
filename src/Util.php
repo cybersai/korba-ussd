@@ -257,14 +257,16 @@ final class Util
     /**
      * @param string $key
      * @param string $value
+     * @param string $new_value
      * @param array[] $history
      * @param string $option
      * @param string $from
      * @param string $to
      */
-    public static function redirect($key, &$value, &$option, $from, $to) {
+    public static function redirect($key, &$value, $new_value, &$option, $from, $to) {
         if ($value === $key && $from === $option) {
             $option = $to;
+            $value = $new_value;
         }
     }
 }
