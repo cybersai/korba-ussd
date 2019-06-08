@@ -193,16 +193,6 @@ class View {
                 $msg .= self::$processPrevious."."."Previous Page\n";
             }
         }
-        if (self::$processNext) {
-            if (!$is_last_page) {
-                $msg .= self::$processNext."."."Next Page\n";
-            }
-        }
-        if (self::$processPrevious) {
-            if (!$is_first_page) {
-                $msg .= self::$processPrevious."."."Previous Page\n";
-            }
-        }
         return $msg;
     }
 
