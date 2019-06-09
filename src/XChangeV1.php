@@ -52,7 +52,9 @@ class XChangeV1 extends API
         }
     }
 
-    public function collect($customer_number, $amount, $transaction_id, $network_code, $callback_url, $vodafone_voucher_code = null, $description = null, $payer_name = null, $extra_info = null) {
+    public function collect(
+        $customer_number, $amount, $transaction_id, $network_code, $callback_url,
+        $vodafone_voucher_code = null, $description = null, $payer_name = null, $extra_info = null) {
         $data = [
             'customer_number' => $customer_number,
             'amount' => $amount,
@@ -68,5 +70,29 @@ class XChangeV1 extends API
         ];
         $this->add_optional_data($data, $opt_data);
         return $this->call('collect/', $data);
+    }
+
+    public function disburse(
+        $customer_number, $amount, $transaction_id, $network_code, $callback_url,
+        $description = null, $extra_info = null, $bank_account_number = null,
+        $bank_name = null, $bank_branch_name = null, $payer_name = null, $payer_mobile = null) {
+        $data = [
+            'customer_number' => $customer_number,
+            'amount' => $amount,
+            'transaction_id' => $transaction_id,
+            'network_code' => $network_code,
+            'callback_url' => $callback_url
+        ];
+        $opt_data = [
+            'description' => $description,
+            'extra_info' => $extra_info,
+            'bank_account_number' => $bank_account_number,
+            'bank_name' => $bank_name,
+            'bank_branch_name' => $bank_branch_name,
+            'payer_name' => $payer_name,
+            'payer_mobile' => $payer_mobile
+        ];
+        $this->add_optional_data($data, $opt_data);
+        return $this->call('disburse/', $data);
     }
 }
