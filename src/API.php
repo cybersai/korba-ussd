@@ -36,16 +36,21 @@ class API
     /**
      * @param string $end_point
      * @param string $data
+     * @param array $extra_headers
      * @return bool|string
      */
-    private function engine($end_point, $data) {
+    private function engine($end_point, $data, $extra_headers = null) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "{$this->base_url}/{$end_point}");
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setOpt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
+        if ($extra_headers) {
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array_merge($this->headers, $extra_headers));
+        } else {
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
+        }
         if ($this->proxy_url) {
             curl_setopt($ch, CURLOPT_PROXY, $this->proxy_url);
             curl_setopt($ch, CURLOPT_PROXYAUTH, CURLAUTH_BASIC);
@@ -60,10 +65,11 @@ class API
     /**
      * @param string $endpoint
      * @param string|array $data
+     * @param array $extra_headers
      * @return mixed
      */
-    protected function call($endpoint, $data) {
-        $res = (gettype($data) == 'array') ? $this->engine($endpoint, json_encode($data)) : $this->engine($endpoint, $data);
+    protected function call($endpoint, $data, $extra_headers = null) {
+        $res = (gettype($data) == 'array') ? $this->engine($endpoint, json_encode($data), $extra_headers) : $this->engine($endpoint, $data, $extra_headers);
         $result = json_decode($res, true);
         return $result;
     }

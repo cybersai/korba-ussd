@@ -12,5 +12,6 @@ return array(
     'Korba\\Param' => $baseDir . '/src/Param.php',
     'Korba\\Util' => $baseDir . '/src/Util.php',
     'Korba\\View' => $baseDir . '/src/View.php',
+    'Korba\\XChangeV1' => $baseDir . '/src/XChangeV1.php',
     'Wel' => $baseDir . '/src/test.php',
 );

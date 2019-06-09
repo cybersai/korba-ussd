@@ -13,6 +13,7 @@ class ComposerStaticInit2b07cfbc016303a51aceb3f94f93a6fc
         'Korba\\Param' => __DIR__ . '/../..' . '/src/Param.php',
         'Korba\\Util' => __DIR__ . '/../..' . '/src/Util.php',
         'Korba\\View' => __DIR__ . '/../..' . '/src/View.php',
+        'Korba\\XChangeV1' => __DIR__ . '/../..' . '/src/XChangeV1.php',
         'Wel' => __DIR__ . '/../..' . '/src/test.php',
     );
 
