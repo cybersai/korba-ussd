@@ -4,20 +4,21 @@
 namespace Korba;
 
 
-class XChange extends API
+class XChangeV1 extends API
 {
 
     private $secret_key;
     private $client_key;
     private $client_id;
+    const url = 'https://xchange.korbaweb.com/api/v1.0';
 
-    public function __construct($base_url, $secret_key, $client_key, $client_id, $proxy)
+    public function __construct($secret_key, $client_key, $client_id, $proxy)
     {
         $headers = array(
             'Cache-Control: no-cache',
             'Content-Type: application/json'
         );
-        parent::__construct($base_url, $headers, $proxy);
+        parent::__construct(XChangeV1::url, $headers, $proxy);
         $this->secret_key = $secret_key;
         $this->client_key = $client_key;
         $this->client_id = $client_id;
@@ -35,4 +36,5 @@ class XChange extends API
         $hmac_signature = hash_hmac('sha256', $message, $this->secret_key);
         return "Authorization: HMAC {$this->client_key}:{$hmac_signature}";
     }
+
 }
