@@ -33,6 +33,7 @@ $his = json_encode($hist);
 $new_his = \Korba\Util::parseHistoryToArray($his);
 
 \Korba\Util::redirect('0', $in, $new_his, $opt, "FIFTH", "SECOND");
+$x = new \Korba\XChangeV1("123123", "34234", "1344");
 
 print_r($new_his);
 echo $opt;
