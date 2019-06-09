@@ -7,11 +7,13 @@ namespace Composer\Autoload;
 class ComposerStaticInit2b07cfbc016303a51aceb3f94f93a6fc
 {
     public static $classMap = array (
+        'Korba\\API' => __DIR__ . '/../..' . '/src/API.php',
         'Korba\\Collection' => __DIR__ . '/../..' . '/src/Collection.php',
         'Korba\\Generator' => __DIR__ . '/../..' . '/src/Generator.php',
         'Korba\\Param' => __DIR__ . '/../..' . '/src/Param.php',
         'Korba\\Util' => __DIR__ . '/../..' . '/src/Util.php',
         'Korba\\View' => __DIR__ . '/../..' . '/src/View.php',
+        'Wel' => __DIR__ . '/../..' . '/src/test.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

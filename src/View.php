@@ -144,7 +144,6 @@ class View {
                 if ($this->iterator == null) {
                     $msg .= "{$num}.{$this->iterable_list[$i + $start_index]}\n";
                 } else {
-                    // TODO iterator can take string
                     $msg .= "{$num}.{$this->iterable_list[$i + $start_index][$this->iterator[1]]}\n";
                 }
             }
