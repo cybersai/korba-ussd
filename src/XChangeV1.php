@@ -197,4 +197,23 @@ class XChangeV1 extends API
         $this->add_optional_data($data, $opt_data);
         return $this->call('ecg_pay_bill/', $data);
     }
+
+    public function gwcl_lookup($customer_number, $account_number, $transaction_id) {
+        $data = [
+            'customer_number' => Util::number233Format($customer_number),
+            'account_number' => $account_number,
+            'transaction_id' => $transaction_id
+        ];
+        return $this->call('gwcl_customer_lookup/', $data);
+    }
+
+    public function gwcl_pay($gwcl_transaction_id, $amount, $callback_url, $description = null) {
+        $data = [
+            'transaction_id' => $gwcl_transaction_id,
+            'amount' => $amount,
+            'callback_url' => $callback_url,
+            'description' => $description
+        ];
+        return $this->call('gwcl_pay_bill/', $data);
+    }
 }
