@@ -26,6 +26,7 @@ class XChangeV1 extends API
 
     private function getHMACHeader($data) {
         $data = (gettype($data) == 'string') ? json_decode($data, true) : $data;
+        $data = array_merge($data, ['client_id' => $this->client_id]);
         $message = '';
         $i = 0;
         ksort($data);
@@ -94,5 +95,24 @@ class XChangeV1 extends API
         ];
         $this->add_optional_data($data, $opt_data);
         return $this->call('disburse/', $data);
+    }
+
+    public function top_up(
+        $customer_number, $amount, $transaction_id, $network_code, $callback_url,
+        $description = null, $payer_name = null, $extra_info = null) {
+        $data = [
+            'customer_number' => $customer_number,
+            'amount' => $amount,
+            'transaction_id' => $transaction_id,
+            'network_code' => $network_code,
+            'callback_url' => $callback_url
+        ];
+        $opt_data = [
+            'description' => $description,
+            'payer_name' => $payer_name,
+            'extra_info' => $extra_info
+        ];
+        $this->add_optional_data($data, $opt_data);
+        return $this->call('topup/', $data);
     }
 }
