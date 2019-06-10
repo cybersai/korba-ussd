@@ -115,4 +115,86 @@ class XChangeV1 extends API
         $this->add_optional_data($data, $opt_data);
         return $this->call('topup/', $data);
     }
+
+    private function internet_data(
+        $customer_number, $transaction_id, $bundle_id, $amount, $callback_url,
+        $description = null, $payer_name = null, $extra_info = null) {
+        $data = [
+            'customer_number' => $customer_number,
+            'transaction_id' => $transaction_id,
+            'bundle_id' => $bundle_id,
+            'amount' => $amount,
+            'callback_url' => $callback_url
+        ];
+        $opt_data = [
+            'description' => $description,
+            'payer_name' => $payer_name,
+            'extra_info' => $extra_info
+        ];
+        $this->add_optional_data($data, $opt_data);
+        return $data;
+    }
+
+    public function surfline_purchase(
+        $customer_number, $transaction_id, $bundle_id, $amount, $callback_url,
+        $description = null, $payer_name = null, $extra_info = null) {
+        $data = $this->internet_data(
+            $customer_number, $transaction_id, $bundle_id, $amount, $callback_url,
+            $description, $payer_name, $extra_info);
+        return $this->call('purchase_surfline_bundle/', $data);
+    }
+
+    public function surfline_bundles($customer_number) {
+        $data = [
+            'customer_number' => $customer_number
+        ];
+        return $this->call('get_surfline_bundles/', $data);
+    }
+
+    public function busy_purchase(
+        $customer_number, $transaction_id, $bundle_id, $amount, $callback_url,
+        $description = null, $payer_name = null, $extra_info = null) {
+        $data = $this->internet_data(
+            $customer_number, $transaction_id, $bundle_id, $amount, $callback_url,
+            $description, $payer_name, $extra_info);
+        return $this->call('purchase_busy_bundle/', $data);
+    }
+
+    public function busy_bundles($customer_number) {
+        $data = [
+            'customer_number' => $customer_number
+        ];
+        return $this->call('get_busy_bundles/', $data);
+    }
+
+    public function telesol_purchase(
+        $customer_number, $transaction_id, $bundle_id, $amount, $callback_url,
+        $description = null, $payer_name = null, $extra_info = null) {
+        $data = $this->internet_data(
+            $customer_number, $transaction_id, $bundle_id, $amount, $callback_url,
+            $description, $payer_name, $extra_info);
+        return $this->call('purchase_telesol_bundle/', $data);
+    }
+
+    public function telesol_bundles() {
+        return $this->call('get_telesol_bundles/', []);
+    }
+
+    public function ecg_pay(
+        $customer_number, $transaction_id, $amount, $callback_url,
+        $description = null, $payer_name = null, $extra_info = null) {
+        $data = [
+            'customer_number' => $customer_number,
+            'transaction_id' => $transaction_id,
+            'amount' => $amount,
+            'callback_url' => $callback_url
+        ];
+        $opt_data = [
+            'description' => $description,
+            'payer_name' => $payer_name,
+            'extra_info' => $extra_info
+        ];
+        $this->add_optional_data($data, $opt_data);
+        return $this->call('ecg_pay_bill/', $data);
+    }
 }
