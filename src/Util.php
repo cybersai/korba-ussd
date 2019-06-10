@@ -42,19 +42,36 @@ final class Util
     }
 
     /**
-     * @param string $number
+     * @param string $int_number
      * @return string|string[]|null
      */
-    public static function numberGHFormat($number) {
-        return preg_replace("/^\+233/", "0", $number);
+    public static function numberGHFormat($int_number) {
+        if (preg_match('/^\+233/', $int_number)) {
+            return preg_replace("/^\+233/", "0", $int_number);
+        }
+        return preg_replace('/^233/', '0', $int_number);
+    }
+
+    /**
+     * @param string $gh_number
+     * @return string|string[]|null
+     */
+    public static function numberIntFormat($gh_number) {
+        if (preg_match('/^0/', $gh_number)) {
+            return preg_replace('/^0/', '+233', $gh_number);
+        }
+        return preg_replace('/^233/', '+233', $gh_number);
     }
 
     /**
      * @param string $number
      * @return string|string[]|null
      */
-    public static function numberIntFormat($number) {
-        return preg_replace('/^0/', '+233', $number);
+    public static function number233Format($number) {
+        if (preg_match('/^0/', $number)) {
+            return preg_replace('/^0/', '233', $number);
+        }
+        return preg_replace('/^\+233/', '233', $number);
     }
 
     /**
