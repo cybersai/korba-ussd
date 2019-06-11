@@ -7,11 +7,13 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Korba\\API' => $baseDir . '/src/API.php',
+    'Korba\\AirtimeNetNum' => $baseDir . '/src/service/airtime/AirtimeNetNum.php',
     'Korba\\Collection' => $baseDir . '/src/Collection.php',
     'Korba\\Generator' => $baseDir . '/src/Generator.php',
+    'Korba\\Menu' => $baseDir . '/src/service/Menu.php',
     'Korba\\Param' => $baseDir . '/src/Param.php',
+    'Korba\\SubMenu' => $baseDir . '/src/service/SubMenu.php',
     'Korba\\Util' => $baseDir . '/src/Util.php',
     'Korba\\View' => $baseDir . '/src/View.php',
     'Korba\\XChangeV1' => $baseDir . '/src/XChangeV1.php',
-    'Wel' => $baseDir . '/src/test.php',
 );
