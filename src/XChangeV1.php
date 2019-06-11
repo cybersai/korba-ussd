@@ -216,4 +216,57 @@ class XChangeV1 extends API
         ];
         return $this->call('gwcl_pay_bill/', $data);
     }
+
+    public function mtn_purchase(
+        $customer_number, $transaction_id, $product_id, $amount, $callback_url,
+        $description = null, $payer_name = null, $extra_info = null) {
+        $data = [
+            'customer_number' => $customer_number,
+            'transaction_id' => $transaction_id,
+            'product_id' => $product_id,
+            'amount' => $amount,
+            'callback_url' => $callback_url
+        ];
+        $opt_data = [
+            'description' => $description,
+            'payer_name' => $payer_name,
+            'extra_info' => $extra_info
+        ];
+        $this->add_optional_data($data, $opt_data);
+        return $this->call('mtn_data_topup/', $data);
+    }
+
+    public function mtn_bundles() {
+        return $this->call('get_mtndata_product_id/', []);
+    }
+
+    public function etransact_validate($customer_number, $bill_type, $transaction_id) {
+        $data = [
+            'customer_number' => $customer_number,
+            'bill_type' => $bill_type,
+            'transaction_id' => $transaction_id
+        ];
+        return $this->call('etransact_validate_user/', $data);
+    }
+
+    public function etransact_pay(
+        $customer_number, $bill_type, $transaction_id, $sender_name, $address, $amount, $callback_url,
+        $description = null, $payer_name = null, $extra_info = null) {
+        $data = [
+            'customer_number' => $customer_number,
+            'bill_type' => $bill_type,
+            'transaction_id' => $transaction_id,
+            'sender_name' => $sender_name,
+            'address' => $address,
+            'amount' => $amount,
+            'callback_url' => $callback_url
+        ];
+        $opt_data = [
+            'description' => $description,
+            'payer_name' => $payer_name,
+            'extra_info' => $extra_info
+        ];
+        $this->add_optional_data($data, $opt_data);
+        return $this->call('etransact_pay_bill/', $data);
+    }
 }
