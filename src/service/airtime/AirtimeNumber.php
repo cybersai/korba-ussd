@@ -4,7 +4,7 @@
 namespace Korba;
 
 
-class AirtimeNumber extends View
+class AirtimeNumber extends View implements Manipulator
 {
     public function __construct()
     {
@@ -12,4 +12,12 @@ class AirtimeNumber extends View
         $next = 'korba_airtime_num_confirm';
         parent::__construct($content, $next);
     }
+
+    public function manipulate(&$tracker, $input)
+    {
+        $network = AirtimeNetwork::$network[$input - 1];
+        $tracker->payload = json_encode(['network' => $network]);
+    }
+
+
 }

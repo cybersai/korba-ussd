@@ -6,5 +6,5 @@ namespace Korba;
 
 interface Manipulator
 {
-    public function manipulate(&$tracker);
+    public function manipulate(&$tracker, $input);
 }

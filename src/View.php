@@ -54,6 +54,64 @@ class View {
     }
 
     /**
+     * @param string|string[] $content
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * @param string|string[] $next
+     */
+    public function setNext($next)
+    {
+        $this->next = $next;
+    }
+
+    /**
+     * @param int $page
+     */
+    public function setPage($page)
+    {
+        $this->page = $page;
+    }
+
+    /**
+     * @param int $number_per_page
+     */
+    public function setNumberPerPage($number_per_page)
+    {
+        $this->number_per_page = $number_per_page;
+    }
+
+    /**
+     * @param object[]|string[] $iterable_list
+     */
+    public function setIterableList($iterable_list)
+    {
+        $this->iterable_list = $iterable_list;
+    }
+
+    /**
+     * @param object[]|string[] $iterator
+     */
+    public function setIterator($iterator)
+    {
+        $this->iterator = $iterator;
+    }
+
+    /**
+     * @param string|string[] $end
+     */
+    public function setEnd($end)
+    {
+        $this->end = $end;
+    }
+
+
+
+    /**
      * @return string
      */
     public function getContent()
@@ -251,9 +309,9 @@ class View {
         return self::$processBeginning;
     }
 
-    public function canManipulate(&$tracker) {
+    public function canManipulate(&$tracker, $input) {
         if (method_exists($this, 'manipulate')) {
-            call_user_func(array($this, 'manipulate'), $tracker);
+            call_user_func(array($this, 'manipulate'), array($tracker, $input));
         }
     }
 }
