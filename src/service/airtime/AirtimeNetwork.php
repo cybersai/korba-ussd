@@ -15,7 +15,7 @@ class AirtimeNetwork extends View
             'Vodafone'
         ];
         $content = "Other Number\nSelect Network";
-        $next = 'airtime_num';
+        $next = 'korba_airtime_num';
         parent::__construct($content, $next, 1, 4, $network);
     }
 }

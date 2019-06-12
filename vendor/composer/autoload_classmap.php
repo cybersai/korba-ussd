@@ -21,6 +21,7 @@ return array(
     'Korba\\Generator' => $baseDir . '/src/Generator.php',
     'Korba\\Menu' => $baseDir . '/src/service/Menu.php',
     'Korba\\Param' => $baseDir . '/src/Param.php',
+    'Korba\\Services' => $baseDir . '/src/Services.php',
     'Korba\\SubMenu' => $baseDir . '/src/service/SubMenu.php',
     'Korba\\Thanks' => $baseDir . '/src/service/Thanks.php',
     'Korba\\TvMenu' => $baseDir . '/src/service/tv/TvMenu.php',

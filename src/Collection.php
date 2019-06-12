@@ -11,7 +11,7 @@ class Collection
 
     public function __construct($collection)
     {
-        $this->collection = $collection;
+        $this->collection = array_change_key_case($collection, CASE_UPPER);
     }
 
     /**
@@ -21,5 +21,9 @@ class Collection
      */
     public function getCurrentView($view, $page = 1) {
         return $this->collection[$view] instanceof View ? $this->collection[$view] : $this->collection[$view]->getView($page);
+    }
+
+    public function getViews() {
+        return json_encode($this->collection);
     }
 }

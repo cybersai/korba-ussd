@@ -22,6 +22,7 @@ class ComposerStaticInit2b07cfbc016303a51aceb3f94f93a6fc
         'Korba\\Generator' => __DIR__ . '/../..' . '/src/Generator.php',
         'Korba\\Menu' => __DIR__ . '/../..' . '/src/service/Menu.php',
         'Korba\\Param' => __DIR__ . '/../..' . '/src/Param.php',
+        'Korba\\Services' => __DIR__ . '/../..' . '/src/Services.php',
         'Korba\\SubMenu' => __DIR__ . '/../..' . '/src/service/SubMenu.php',
         'Korba\\Thanks' => __DIR__ . '/../..' . '/src/service/Thanks.php',
         'Korba\\TvMenu' => __DIR__ . '/../..' . '/src/service/tv/TvMenu.php',

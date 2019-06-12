@@ -25,7 +25,7 @@ class Menu extends View
             array_push($list, "Utilities");
         }
         $content = "Services\nPlease select";
-        $next = "sub_menu";
+        $next = "korba_sub_menu";
         parent::__construct($content, $next, 1, 6, $list);
     }
 }
