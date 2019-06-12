@@ -6,7 +6,7 @@ namespace Korba;
 
 class AirtimeNetwork extends View
 {
-    public function __construct($page)
+    public function __construct()
     {
         $network = [
             'AirtelTigo',

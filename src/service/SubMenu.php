@@ -12,19 +12,19 @@ class SubMenu extends ViewGroup
 
         ];
         if ($ft) {
-            array_push($content, new FundMenu());
+            array_push($views, new FundMenu());
         }
         if ($airtime) {
-            array_push($content, new AirtimeMenu());
+            array_push($views, new AirtimeMenu());
         }
         if ($data) {
-            array_push($content, new DataMenu());
+            array_push($views, new DataMenu());
         }
         if ($tv) {
-            array_push($content, new TvMenu());
+            array_push($views, new TvMenu());
         }
         if ($util) {
-            array_push($content, new UtilMenu());
+            array_push($views, new UtilMenu());
         }
         parent::__construct($views);
     }

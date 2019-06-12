@@ -24,8 +24,8 @@ class Menu extends View
         if ($util) {
             array_push($list, "Utilities");
         }
-        $content = "Services\nPlease select\n".self::arrayToList(1, 6,$list);
+        $content = "Services\nPlease select";
         $next = "sub_menu";
-        parent::__construct($content, $next, 1);
+        parent::__construct($content, $next, 1, 6, $list);
     }
 }
