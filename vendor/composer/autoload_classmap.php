@@ -7,7 +7,9 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Korba\\API' => $baseDir . '/src/API.php',
+    'Korba\\AirtimeConfirm' => $baseDir . '/src/service/airtime/AirtimeConfirm.php',
     'Korba\\AirtimeNetNum' => $baseDir . '/src/service/airtime/AirtimeNetNum.php',
+    'Korba\\AirtimeSource' => $baseDir . '/src/service/airtime/AirtimeSource.php',
     'Korba\\Collection' => $baseDir . '/src/Collection.php',
     'Korba\\Generator' => $baseDir . '/src/Generator.php',
     'Korba\\Menu' => $baseDir . '/src/service/Menu.php',
@@ -15,5 +17,6 @@ return array(
     'Korba\\SubMenu' => $baseDir . '/src/service/SubMenu.php',
     'Korba\\Util' => $baseDir . '/src/Util.php',
     'Korba\\View' => $baseDir . '/src/View.php',
+    'Korba\\ViewGroup' => $baseDir . '/src/ViewGroup.php',
     'Korba\\XChangeV1' => $baseDir . '/src/XChangeV1.php',
 );
