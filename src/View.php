@@ -250,4 +250,10 @@ class View {
     public static function getProcessBeginning() {
         return self::$processBeginning;
     }
+
+    public function canManipulate(&$tracker) {
+        if (method_exists($this, 'manipulate')) {
+            call_user_func(array($this, 'manipulate'), $tracker);
+        }
+    }
 }

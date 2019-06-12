@@ -4,13 +4,16 @@
 namespace Korba;
 
 
-class Services extends Collection
+final class Services extends Collection
 {
-    public function __construct()
+    private $accounts;
+
+    public function __construct(&$tracker, $accounts = null, $available = [false, true, true, true, true])
     {
+        $this->accounts = $accounts;
         $collection = [
-            'korba_menu' => new Menu(),
-            'korba_sub_menu' => new SubMenu(),
+            'korba_menu' => new Menu(...$available),
+            'korba_sub_menu' => new SubMenu(...$available),
             'korba_airtime_net_num' => new AirtimeNetNum(),
             'korba_airtime_num' => new AirtimeNumber(),
             'korba_airtime_num_confirm' => new Confirm('korba_airtime_amount', 'recipient'),

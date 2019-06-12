@@ -4,7 +4,7 @@
 namespace Korba;
 
 
-class XChangeV1 extends API
+final class XChangeV1 extends API
 {
 
     private $secret_key;

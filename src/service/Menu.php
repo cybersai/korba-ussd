@@ -6,7 +6,15 @@ namespace Korba;
 
 class Menu extends View
 {
-    public function __construct($ft = true, $airtime = true, $data = true, $tv = true, $util = true)
+    /**
+     * Menu constructor.
+     * @param bool $ft
+     * @param bool $airtime
+     * @param bool $data
+     * @param bool $tv
+     * @param bool $util
+     */
+    public function __construct($ft, $airtime, $data, $tv, $util)
     {
         $list = [];
         if ($ft) {

@@ -13,4 +13,4 @@ $service = new \Korba\Services();
 //echo $air_num_net->parseToString();
 //echo $group_menu->getView(3)->parseToString();
 //echo $collection->getCurrentView("group", 1)->parseToString();
-echo $service->getCurrentView(strtoupper('korba_airtime_auth'),1)->parseToString();
+echo $service->getCurrentView(strtoupper('korba_menu'),1)->parseToString();
