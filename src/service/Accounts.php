@@ -6,10 +6,10 @@ namespace Korba;
 
 class Accounts extends View
 {
-    public function __construct($next, $page, $iterable_list, $iterator = null, $number_per_page = 4)
+    public function __construct($next)
     {
         $content = "Select Account";
-        parent::__construct($content, $next, $page, $number_per_page, $iterable_list, $iterator);
+        parent::__construct($content, $next);
     }
 
     public function setAll($page, $iterable_list, $iterator = null, $number_per_page = 4) {

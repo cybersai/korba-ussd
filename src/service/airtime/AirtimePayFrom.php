@@ -4,11 +4,11 @@
 namespace Korba;
 
 
-class AirtimeAmount extends Amount
+class AirtimePayFrom extends PayFrom
 {
     public function __construct()
     {
-        $next = 'korba_airtime_confirmation';
+        $next = 'korba_airtime_acc_momo';
         parent::__construct($next);
     }
 }

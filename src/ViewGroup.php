@@ -18,7 +18,6 @@ class ViewGroup
         $this->views = $views;
     }
 
-
     /**
      * @param int $page
      * @return View

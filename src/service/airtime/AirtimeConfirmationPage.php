@@ -6,9 +6,8 @@ namespace Korba;
 
 class AirtimeConfirmationPage extends ConfirmationPage implements Manipulator
 {
-    public function __construct($provider = '', $account = '', $amount = 0, $fee = 0)
+    public function __construct($next = 'korba_airtime_auth', $provider = '', $account = [], $amount = 0, $fee = 0)
     {
-        $next = 'korba_airtime_auth';
         parent::__construct($next, $provider, $account, $amount, $fee);
     }
 
@@ -18,10 +17,11 @@ class AirtimeConfirmationPage extends ConfirmationPage implements Manipulator
         if ($tracker->type == 'own') {
             $this->setAll(AirtimeNetwork::$human_network[$payload['network']], $payload['number'], $input);
         } else {
-            $this->setAll($tracker->network, Util::numberGHFormat($tracker->phone_number), $input);
+            $this->setAll(AirtimeNetwork::$human_network[$tracker->network], Util::numberGHFormat($tracker->phone_number), $input);
         }
-        if (!Util::verifyAmount($input)) {
-            $this->setNext('end');
+        if ($tracker->authorization != 'registered') {
+            $this->setNext('korba_airtime_auth');
         }
+        $tracker->amount = $input;
     }
 }

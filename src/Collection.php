@@ -6,7 +6,7 @@ namespace Korba;
 
 class Collection
 {
-    /** @var View[]|ViewGroup[] */
+    /** @var View[]|ViewGroup[]|Worker[] */
     private $collection;
 
     public function __construct($collection)
@@ -20,6 +20,9 @@ class Collection
      * @return View
      */
     public function getCurrentView($view, $page = 1) {
+        if ($this->collection[$view] instanceof Worker) {
+            return $this->collection[$view]->getSelectedView();
+        }
         return $this->collection[$view] instanceof View ? $this->collection[$view] : $this->collection[$view]->getView($page);
     }
 

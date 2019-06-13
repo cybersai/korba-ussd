@@ -20,6 +20,7 @@ class AirtimeConfirm extends Confirm implements Manipulator
             $payload,
             ['number' => Util::numberGHFormat($input)]
         ]));
+        $this->setAll($input);
     }
 
 }
