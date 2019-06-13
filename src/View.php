@@ -311,7 +311,7 @@ class View {
 
     public function canManipulate(&$tracker, $input) {
         if (method_exists($this, 'manipulate')) {
-            call_user_func(array($this, 'manipulate'), array($tracker, $input));
+            call_user_func_array(array($this, 'manipulate'), array(&$tracker, $input));
         }
     }
 }
