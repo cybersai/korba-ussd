@@ -23,13 +23,13 @@ class ExampleVerifyAccounts extends VerifyAccounts {
         ];
         if ($accounts) {
             $this->setView($this->getView(1));
-            print_r($this->getSelectedView(1));
-            echo '<br><br>';
+//            print_r($this->getSelectedView(1));
+//            echo '<br><br>';
             $this->getSelectedView(1)->setContent('Testing 2');
             $this->getSelectedView(1)->setIterableList($accounts);
             $this->getSelectedView(1)->setPage(1);
             $this->getSelectedView(1)->setNumberPerPage(4);
-            echo $this->getSelectedView(1)->getContent()."<br>";
+//            echo $this->getSelectedView(1)->getContent()."<br>";
             $this->getSelectedView(1)->setIterator(['acc_no', 'acc_name']);
         } else {
             $this->setView($this->getView(2));
