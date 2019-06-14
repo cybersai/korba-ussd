@@ -31,19 +31,27 @@ class Verify extends \Korba\VerifyAccounts {
             $this->getSelectedView(1)->setIterator(['acc_no', 'acc_name']);
         } else {
             $this->setView($this->getView(2));
+            if ($tracker->network == 'VOD') {
+                $this->getSelectedView(2)->setNext('korba_airtime_vod');
+            }
         }
     }
 }
 
-$verify = new Verify('dsfa');
 
+
+
+
+
+$verify = new Verify('dsfa');
 $tracker = new stdClass();
 $tracker->payload = json_encode(['network' => 'MTN', 'number' => '0545112466']);
+$tracker->network = 'VOD';
 $tracker->type = 'own';
 $tracker->authorization = 'registered';
 $input = '1';
-$option = 'korba_airtime_pin';
-$service = new \Korba\Services($verify);
+$option = 'korba_airtime_vod';
+$service = new \Korba\Services();
 $service->canProcess($tracker, $input, strtoupper($option));
 $response = $service->getCurrentView(strtoupper($option), $input);
 $response->canManipulate($tracker, $input);

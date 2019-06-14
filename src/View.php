@@ -66,7 +66,7 @@ class View {
      */
     public function setNext($next)
     {
-        $this->next = $next;
+        $this->next = strtoupper($next);
     }
 
     /**

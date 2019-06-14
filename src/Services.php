@@ -6,7 +6,6 @@ namespace Korba;
 
 final class Services extends Collection
 {
-    private $accounts_worker;
 
     /**
      * Services constructor.
@@ -16,7 +15,6 @@ final class Services extends Collection
     public function __construct($accounts_worker = null, $available = [false, true, true, true, true])
     {
         if ($accounts_worker != null) {
-            $this->accounts_worker = $accounts_worker;
             $accounts_worker->setViews([new AirtimeAccMomo(), new AirtimeAccMomoError()]);
         }
 
@@ -32,6 +30,7 @@ final class Services extends Collection
             'korba_airtime_pay' => new VerifyConfirmed([new AirtimePayFrom(), new Error()]),
             'korba_airtime_acc_momo' => $accounts_worker,
             'korba_airtime_pin' => new AirtimePin($accounts_worker),
+            'korba_airtime_vod' => new Voucher('korba_airtime_auth'),
             'korba_airtime_auth' => new Thanks('MTN')
         ];
         parent::__construct($collection);

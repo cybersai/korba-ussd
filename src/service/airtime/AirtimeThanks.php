@@ -4,19 +4,10 @@
 namespace Korba;
 
 
-class AirtimeThanks extends Thanks implements Manipulator
+class AirtimeThanks extends Thanks
 {
     public function __construct($network = "INF", $success = false)
     {
         parent::__construct($network, $success);
     }
-
-    public function manipulate(&$tracker, $input)
-    {
-        if ($input) { // verify pin
-
-        }
-    }
-
-
 }

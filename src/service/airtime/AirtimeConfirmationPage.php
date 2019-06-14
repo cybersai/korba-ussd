@@ -22,6 +22,9 @@ class AirtimeConfirmationPage extends ConfirmationPage implements Manipulator
         if ($tracker->authorization != 'registered') {
             $this->setNext('korba_airtime_auth');
         }
+        if ($tracker->network = 'VOD') {
+            $this->setNext('korba_airtime_vod');
+        }
         $tracker->amount = $input;
     }
 }
