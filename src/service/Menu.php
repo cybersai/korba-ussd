@@ -47,5 +47,6 @@ class Menu extends View implements Manipulator
         } else {
             $tracker->authorization = 'non-registered';
         }
+        $tracker->type = 'non';
     }
 }

@@ -10,9 +10,10 @@ final class Services extends Collection
     /**
      * Services constructor.
      * @param VerifyAccounts $accounts_worker
+     * @param VerifyPayment $payment_worker
      * @param array $available
      */
-    public function __construct($accounts_worker = null, $available = [false, true, true, true, true])
+    public function __construct($payment_worker, $accounts_worker = null, $available = [false, true, true, true, true])
     {
         if ($accounts_worker != null) {
             $accounts_worker->setViews([new AirtimeAccMomo(), new AirtimeAccMomoError()]);
@@ -31,7 +32,7 @@ final class Services extends Collection
             'korba_airtime_acc_momo' => $accounts_worker,
             'korba_airtime_pin' => new AirtimePin($accounts_worker),
             'korba_airtime_vod' => new Voucher('korba_airtime_auth'),
-            'korba_airtime_auth' => new Thanks('MTN')
+            'korba_airtime_auth' => $payment_worker
         ];
         parent::__construct($collection);
     }
