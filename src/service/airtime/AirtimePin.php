@@ -17,6 +17,6 @@ class AirtimePin extends Pin implements Manipulator
 
     public function manipulate(&$tracker, $input)
     {
-        $tracker->account_number = json_encode(call_user_func(array($this->accounts_worker, 'getAccount'), $input));
+        $tracker->account_number = json_encode(call_user_func(array($this->accounts_worker, 'getAccount'), array($tracker->phone_number, $input)));
     }
 }

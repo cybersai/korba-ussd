@@ -6,6 +6,5 @@ namespace Korba;
 
 interface UserAccount
 {
-    public function getAccount($num);
-//    public function getAccounts();
+    public function getAccount($phone_number, $position);
 }
