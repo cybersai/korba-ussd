@@ -37,6 +37,6 @@ class AirtimeNetwork extends View implements Manipulator
 
     public function manipulate(&$tracker, $input)
     {
-        $tracker->type = 'own';
+        $tracker->type = 'other';
     }
 }

@@ -65,12 +65,12 @@ class VerifyP extends \Korba\VerifyPayment {
 $verify = new Verify();
 $pverify = new VerifyP();
 $tracker = new stdClass();
-$tracker->payload = json_encode(['network' => 'MTN', 'number' => '0545112466']);
+$tracker->payload = json_encode(['network' => 'GLO', ]);
 $tracker->network = 'VOD';
 $tracker->type = 'own';
-$tracker->authorization = 'registered';
-$input = '1';
-$option = 'korba_airtime_auth';
+$tracker->authorization = 'non-registered';
+$input = '0545112466';
+$option = 'korba_airtime_num_confirm';
 $service = new \Korba\Services($pverify);
 $service->canProcess($tracker, $input, strtoupper($option));
 $response = $service->getCurrentView(strtoupper($option), $input);

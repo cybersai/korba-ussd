@@ -14,7 +14,7 @@ class AirtimeConfirmationPage extends ConfirmationPage implements Manipulator
     public function manipulate(&$tracker, $input)
     {
         $payload = json_decode($tracker->payload, true);
-        if ($tracker->type == 'own') {
+        if ($tracker->type == 'other') {
             $this->setAll(AirtimeNetwork::$human_network[$payload['network']], $payload['number'], $input);
         } else {
             $this->setAll(AirtimeNetwork::$human_network[$tracker->network], Util::numberGHFormat($tracker->phone_number), $input);
