@@ -6,28 +6,31 @@ namespace Korba;
 
 abstract class Worker
 {
-    /** @var View[] */
+    /** @var View[]|ViewGroup[] */
     private $views;
-    /** @var View */
+    /** @var View|ViewGroup */
     private $view;
 
     public function __construct($views)
     {
         $this->views = $views;
+//        $this->setView($views[0]);
     }
 
+
     /**
+     * @param $pos
      * @return View
      */
-    public function getSelectedView()
+    public function getSelectedView($pos)
     {
-        return $this->view;
+        return $this->view instanceof View ? $this->view : $this->view->getView($pos);
     }
 
 
     /**
      * @param int $pos
-     * @return View
+     * @return View|ViewGroup
      */
     protected function getView($pos)
     {
@@ -35,7 +38,7 @@ abstract class Worker
     }
 
     /**
-     * @param View $view
+     * @param View|ViewGroup $view
      */
     protected function setView($view)
     {
@@ -43,7 +46,7 @@ abstract class Worker
     }
 
     /**
-     * @param View[] $views
+     * @param View[]|ViewGroup[] $views
      */
     public function setViews($views)
     {

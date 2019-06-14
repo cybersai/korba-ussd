@@ -10,6 +10,7 @@ class AirtimeVerifyAmount extends Worker
     {
         $confirmation_page =  $accounts_worker ? new AirtimeConfirmationPage('korba_airtime_pay') : new AirtimeConfirmationPage();
         $views = [$confirmation_page, new AirtimeInvalidAmount()];
+        parent::__construct($views);
     }
 
     public function process(&$tracker, $input)

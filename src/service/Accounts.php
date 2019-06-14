@@ -9,7 +9,7 @@ class Accounts extends View
     public function __construct($next)
     {
         $content = "Select Account";
-        parent::__construct($content, $next);
+        parent::__construct($content, $next, $page = 1, $number_per_page = 4);
     }
 
     public function setAll($page, $iterable_list, $iterator = null, $number_per_page = 4) {

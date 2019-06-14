@@ -314,10 +314,4 @@ class View {
             call_user_func_array(array($this, 'manipulate'), array(&$tracker, $input));
         }
     }
-
-    public function canProcess(&$tracker, $input) {
-        if (method_exists($this, 'process')) {
-            call_user_func_array(array($this, 'process'), array(&$tracker, $input));
-        }
-    }
 }

@@ -8,7 +8,7 @@ class AirtimeNetNum extends ViewGroup
 {
     public function __construct()
     {
-        $views = [new AirtimeNetwork(), new Amount('korba_airtime_confirmation')];
+        $views = [new Amount('korba_airtime_confirmation'), new AirtimeNetwork()];
         parent::__construct($views);
     }
 }

@@ -17,7 +17,7 @@ final class Services extends Collection
     {
         if ($accounts_worker != null) {
             $this->accounts_worker = $accounts_worker;
-            $this->accounts_worker->setViews([]);
+            $accounts_worker->setViews([new AirtimeAccMomo(), new AirtimeAccMomoError()]);
         }
 
         $collection = [
@@ -30,7 +30,7 @@ final class Services extends Collection
             'korba_airtime_amount' => new VerifyConfirmed([new AirtimeAmount(), new Error()]),
             'korba_airtime_confirmation' => new AirtimeVerifyAmount($accounts_worker),
             'korba_airtime_pay' => new VerifyConfirmed([new AirtimePayFrom(), new Error()]),
-            'korba_airtime_acc_momo' => new AirtimeAccMomo($accounts_worker, 'korba_airtime_pin'),
+            'korba_airtime_acc_momo' => $accounts_worker,
             'korba_airtime_pin' => new AirtimePin($accounts_worker),
             'korba_airtime_auth' => new Thanks('MTN')
         ];

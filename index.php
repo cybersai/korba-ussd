@@ -2,19 +2,53 @@
 
 require 'vendor/autoload.php';
 
-$menu = new \Korba\Menu(false, true, true, true, false);
-$submenu = new \Korba\SubMenu(1, 1,false, true, true);
-$air_num_net = new \Korba\Amount("test");
-$group_menu = new \Korba\ViewGroup([$menu, $air_num_net]);
+class Verify extends \Korba\VerifyAccounts {
 
-$collection = new \Korba\Collection(["menu" => $menu,"submenu" => $submenu, "group" => $group_menu]);
-$service = new \Korba\Services();
+    public function getAccount($num)
+    {
+        $accounts = [
+            ['acc_no' => '2313123', 'acc_name' => 'Test'],
+            ['acc_no' => '312312', 'acc_name' => 'Test 2']
+        ];
+        return $accounts[$num - 1];
+    }
+
+    public function process(&$tracker, $input)
+    {
+        $accounts = [
+            ['acc_no' => '2313123', 'acc_name' => 'Test'],
+            ['acc_no' => '312312', 'acc_name' => 'Test 2']
+        ];
+        if ($accounts) {
+            $this->setView($this->getView(1));
+            print_r($this->getSelectedView(1));
+            echo '<br><br>';
+            $this->getSelectedView(1)->setContent('Testing 2');
+            $this->getSelectedView(1)->setIterableList($accounts);
+            $this->getSelectedView(1)->setPage(1);
+            $this->getSelectedView(1)->setNumberPerPage(4);
+            echo $this->getSelectedView(1)->getContent()."<br>";
+            $this->getSelectedView(1)->setIterator(['acc_no', 'acc_name']);
+        } else {
+            $this->setView($this->getView(2));
+        }
+    }
+}
+
+$verify = new Verify('dsfa');
+
 $tracker = new stdClass();
-$input = 1;
+$tracker->payload = json_encode(['network' => 'MTN', 'number' => '0545112466']);
+$tracker->type = 'own';
+$tracker->authorization = 'registered';
+$input = '1';
+$option = 'korba_airtime_pin';
+$service = new \Korba\Services($verify);
+$service->canProcess($tracker, $input, strtoupper($option));
+$response = $service->getCurrentView(strtoupper($option), $input);
+$response->canManipulate($tracker, $input);
+echo "<br>".$response->parseToString()."<br>";
+print_r($tracker);
+echo "<br>".$response->getNext();
 
-//echo $air_num_net->parseToString();
-//echo $group_menu->getView(3)->parseToString();
-//echo $collection->getCurrentView("group", 1)->parseToString();
-//echo $service->getCurrentView(strtoupper('korba_airtime_num'),1)->parseToString();
-$service->getCurrentView(strtoupper('korba_airtime_num'),1)->canManipulate($tracker, $input);
 

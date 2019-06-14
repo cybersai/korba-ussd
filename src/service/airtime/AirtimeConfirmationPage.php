@@ -6,7 +6,7 @@ namespace Korba;
 
 class AirtimeConfirmationPage extends ConfirmationPage implements Manipulator
 {
-    public function __construct($next = 'korba_airtime_auth', $provider = '', $account = [], $amount = 0, $fee = 0)
+    public function __construct($next = 'korba_airtime_auth', $provider = '', $account = '', $amount = 0, $fee = 0)
     {
         parent::__construct($next, $provider, $account, $amount, $fee);
     }

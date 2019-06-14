@@ -20,6 +20,4 @@ class VerifyConfirmed extends Worker
             $this->setView($this->getView(2));
         }
     }
-
-
 }

@@ -14,6 +14,12 @@ class Collection
         $this->collection = array_change_key_case($collection, CASE_UPPER);
     }
 
+    public function canProcess(&$tracker, $input, $view) {
+        if (method_exists($this->collection[$view], 'process')) {
+            call_user_func_array(array($this->collection[$view], 'process'), array(&$tracker, $input));
+        }
+    }
+
     /**
      * @param string $view
      * @param int $page
@@ -21,7 +27,7 @@ class Collection
      */
     public function getCurrentView($view, $page = 1) {
         if ($this->collection[$view] instanceof Worker) {
-            return $this->collection[$view]->getSelectedView();
+            return $this->collection[$view]->getSelectedView($page);
         }
         return $this->collection[$view] instanceof View ? $this->collection[$view] : $this->collection[$view]->getView($page);
     }

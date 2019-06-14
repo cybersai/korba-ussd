@@ -4,7 +4,7 @@
 namespace Korba;
 
 
-class AirtimeAccMomo extends ViewGroup
+class AirtimeAccMomoError extends ViewGroup
 {
 
     /**
@@ -13,8 +13,7 @@ class AirtimeAccMomo extends ViewGroup
      */
     public function __construct()
     {
-        $next = 'korba_airtime_pin';
-        $views = [ new Accounts($next), new AirtimeThanks()];
+        $views = [ new Error('Accounts not found'), new AirtimeThanks()];
         parent::__construct($views);
     }
 }
