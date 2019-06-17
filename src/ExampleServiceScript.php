@@ -4,38 +4,33 @@
 namespace Korba;
 
 
-class ExampleServiceScript
+class ServiceScript
 {
     private function __construct() { }
 
     public static function copyMe(&$tracker, $input, $target, $option, $has_accounts = true, $available = [false, true, true, true, true]) {
         switch ($option) {
             case "KORBA_MENU":
-                $tracker->type = 'non-registered';
+                $tracker->authorization = 'non-registered';
                 return new Menu(...$available);
-                break;
 
             case "KORBA_MENU_R":
-                $tracker->type = 'registered';
+                $tracker->authorization = 'registered';
                 return new Menu(...$available);
-                break;
 
             case "KORBA_SUB_MENU":
                 $view_group = new SubMenu(...$available);
                 return intval($input) >= 1 && intval($input) <= 5 ? $view_group->getView($input) : new Error();
-                break;
 
             case "KORBA_AIRTIME_NET_NUM":
-                $tracker->type = $input == '1' ? 'other' : 'own';
+                $tracker->type = $input == '1' ? 'own' : 'other';
                 $view_group = new AirtimeNetNum();
                 return $input == '1' || $input == '2' ? $view_group->getView($input) : new Error();
-                break;
 
             case "KORBA_AIRTIME_NUM":
                 $network = AirtimeNetwork::$network[intval($input) - 1];
                 $tracker->payload = json_encode(['network' => $network]);
                 return new AccountNumber('korba_airtime_num_confirm', 'recipient');
-                break;
 
             case "KORBA_AIRTIME_NUM_CONFIRM":
                 $payload = json_decode($tracker->payload, true);
@@ -44,11 +39,9 @@ class ExampleServiceScript
                     'number' => Util::numberGHFormat($input)
                 ]);
                 return new Confirm('korba_airtime_amount',Util::numberGHFormat($input), 'recipient');
-                break;
 
             case "KORBA_AIRTIME_AMOUNT":
                 return $input == '1' ? new Amount('korba_airtime_confirmation') : new Error();
-                break;
 
             case "KORBA_AIRTIME_CONFIRMATION":
                 $payload = json_decode($tracker->payload, true);
@@ -62,48 +55,68 @@ class ExampleServiceScript
                 }
                 $tracker->amount = $input;
                 return Util::verifyAmount($input) ? new ConfirmationPage($next, 'Airtime', $number, $input) : new Error('Invalid Amount Entered');
-                break;
 
             case "KORBA_AIRTIME_PAY":
                 return $input == '1' ? new PayFrom('korba_airtime_acc_momo') : new Error();
-                break;
 
             case "KORBA_AIRTIME_ACC_MOMO":
-                // TODO redirect when option 2 is selected
+                // TODO redirect when option 2 is selected using the redirect function
                 /*
                  * Replace Accounts with your own functions to produce
                  * Accounts
                  * hints: it can be NameOfAppAccounts()
                  */
-                return 1;
-                break;
+                $acc = ['code' => 200, 'message' => [['acc_no' => '1'], ['acc_no' => '2']]];
+                if ($acc['code'] == 200) {
+                    return new Accounts('korba_airtime_pin', $target, $acc['message'], ['acc_no', 'acc_no']);
+                } else {
+                    return new Error('Could not retrieve accounts list');
+                }
 
             case "KORBA_AIRTIME_PIN":
                 /*
                  * Save the account number
+                 * Replace with your own function
                  */
 //                $tracker->account_number
-                return new Pin('korba_airtime_auth');
-                break;
+                $acc = ['code' => 200, 'message' => [['acc_no' => '1'], ['acc_no' => '2']]];
+                if ($acc['code'] == 200) {
+                    $tracker->account_number = json_encode($acc['message'][intval($input) - 1]);
+                    return new Pin('korba_airtime_auth');
+                } else {
+                    return new Error('Could not retrieve accounts list');
+                }
 
             case "KORBA_AIRTIME_VOD":
                 return new Voucher('korba_airtime_auth');
-                break;
 
             case "KORBA_AIRTIME_AUTH":
                 /*
                  * Write your payment functions here
                  */
-                return 1;
+                $payload = json_decode($tracker->payload, true);
+                $acc = json_decode($tracker->account_number,true);
+                $recepient_number = $tracker->type == 'own' ? Util::numberGHFormat($tracker->phonenumber) : $payload['number'];
+                $network = $tracker->type == 'own' ? $tracker->network : $payload['network'];
+                if ($tracker->authorization == 'registered' && $has_accounts && $input != 'redirected') {
+                    $pay = ['code' => 200, 'message' => 'Transaction Successful'];
+                    if ($pay['code'] == 200) {
+                        return new Thanks('DONE');
+                    } else {
+                        return new Error('Error during payment, try again');
+                    }
+                } else {
+                    $pay = ['code' => 200, 'message' => 'Transaction Successful'];
+                    return new Thanks($tracker->network);
+                }
 
-
-                default:
-                    return new Error();
+            default:
+                return new Error();
         }
     }
 
     public static function redirect($tracker, &$input, &$option) {
         $suffix = $tracker->type == 'VOD' ? 'VOD' : 'AUTH';
-        Util::redirect('2', $input, '2', $option, 'KORBA_AIRTIME_ACC_MOMO', "KORBA_AIRTIME_{$suffix}");
+        Util::redirect('2', $input, 'redirected', $option, 'KORBA_AIRTIME_ACC_MOMO', "KORBA_AIRTIME_{$suffix}");
     }
 }
