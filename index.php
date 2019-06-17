@@ -86,7 +86,7 @@ $tracker->phone_number = '+233545112466';
 $tracker->network = 'MTN';
 $input = '1';
 $target = '1';
-$option = 'korba_airtime_auth';
+$option = 'KORBA_AIRTIME_ACC_MOMO';
 
 $response = \Korba\ExampleServiceScript::copyMe($tracker, $input, $target, strtoupper($option));
 echo $response->parseToString()."<br>";

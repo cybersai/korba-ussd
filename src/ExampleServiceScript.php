@@ -4,7 +4,7 @@
 namespace Korba;
 
 
-class ServiceScript
+class ExampleServiceScript
 {
     private function __construct() { }
 
@@ -66,7 +66,7 @@ class ServiceScript
                  * Accounts
                  * hints: it can be NameOfAppAccounts()
                  */
-                $acc = ['code' => 200, 'message' => [['acc_no' => '1'], ['acc_no' => '2']]];
+                $acc = ['code' => 200, 'message' => [['acc_no' => 'First'], ['acc_no' => 'Second']]];
                 if ($acc['code'] == 200) {
                     return new Accounts('korba_airtime_pin', $target, $acc['message'], ['acc_no', 'acc_no']);
                 } else {
@@ -79,7 +79,7 @@ class ServiceScript
                  * Replace with your own function
                  */
 //                $tracker->account_number
-                $acc = ['code' => 200, 'message' => [['acc_no' => '1'], ['acc_no' => '2']]];
+                $acc = ['code' => 200, 'message' => [['acc_no' => 'First'], ['acc_no' => 'Second']]];
                 if ($acc['code'] == 200) {
                     $tracker->account_number = json_encode($acc['message'][intval($input) - 1]);
                     return new Pin('korba_airtime_auth');
