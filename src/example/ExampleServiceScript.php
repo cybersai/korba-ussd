@@ -101,7 +101,7 @@ class ExampleServiceScript
                 if ($tracker->authorization == 'registered' && $has_accounts && $input != 'redirected') {
                     $pay = ['code' => 200, 'message' => 'Transaction Successful'];
                     if ($pay['code'] == 200) {
-                        return new Thanks('DONE');
+                        return new Thanks('DONE', true);
                     } else {
                         return new Error('Error during payment, try again');
                     }
