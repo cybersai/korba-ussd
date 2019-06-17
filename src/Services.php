@@ -24,7 +24,7 @@ final class Services extends Collection
             'korba_menu_r' => new Menu('registered',...$available),
             'korba_sub_menu' => new SubMenu(...$available),
             'korba_airtime_net_num' => new AirtimeNetNum(),
-            'korba_airtime_num' => new AirtimeNumber(),
+            'korba_airtime_num' => new AccountNumber(),
             'korba_airtime_num_confirm' => new AirtimeConfirm(),
             'korba_airtime_amount' => new VerifyConfirmed([new AirtimeAmount(), new Error()]),
             'korba_airtime_confirmation' => new AirtimeVerifyAmount($accounts_worker),

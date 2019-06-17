@@ -4,7 +4,7 @@
 namespace Korba;
 
 
-class Menu extends View implements Manipulator
+class Menu extends View
 {
     private $type;
     /**
@@ -16,9 +16,8 @@ class Menu extends View implements Manipulator
      * @param bool $tv
      * @param bool $util
      */
-    public function __construct($type, $ft, $airtime, $data, $tv, $util)
+    public function __construct($ft, $airtime, $data, $tv, $util)
     {
-        $this->type = $type;
         $list = [];
         if ($ft) {
             array_push($list, "Funds Transfer");
@@ -38,15 +37,5 @@ class Menu extends View implements Manipulator
         $content = "Services\nPlease select";
         $next = "korba_sub_menu";
         parent::__construct($content, $next, 1, 6, $list);
-    }
-
-    public function manipulate(&$tracker, $input)
-    {
-        if ($this->type == 'registered') {
-            $tracker->authorization = 'registered';
-        } else {
-            $tracker->authorization = 'non-registered';
-        }
-        $tracker->type = 'own';
     }
 }

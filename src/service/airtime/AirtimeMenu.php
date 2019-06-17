@@ -4,7 +4,7 @@
 namespace Korba;
 
 
-class AirtimeMenu extends View implements Manipulator
+class AirtimeMenu extends View
 {
     public function __construct()
     {
@@ -13,13 +13,4 @@ class AirtimeMenu extends View implements Manipulator
         $airtime_list = ["Own network", "Other network"];
         parent::__construct($content, $next, 1, 2, $airtime_list);
     }
-
-    public function manipulate(&$tracker, $input)
-    {
-        if (View::getProcessBack() == $input) {
-            $tracker->type = 'own';
-        }
-    }
-
-
 }

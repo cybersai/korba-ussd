@@ -4,7 +4,7 @@ require 'vendor/autoload.php';
 
 class Verify extends \Korba\VerifyAccounts {
 
-    public function getAccount($num)
+    public function getAccount($num, $pos)
     {
         $accounts = [
             ['acc_no' => '2313123', 'acc_name' => 'Test'],
@@ -62,21 +62,34 @@ class VerifyP extends \Korba\VerifyPayment {
 
 
 
-$verify = new Verify();
-$pverify = new VerifyP();
+//$verify = new Verify();
+//$pverify = new VerifyP();
+//$tracker = new stdClass();
+//$tracker->payload = json_encode(['network' => 'GLO', ]);
+//$tracker->network = 'VOD';
+//$tracker->type = 'own';
+//$tracker->authorization = 'non-registered';
+//$input = '0545112466';
+//$option = 'korba_airtime_num_confirm';
+//$service = new \Korba\Services($pverify);
+//$service->canProcess($tracker, $input, strtoupper($option));
+//$response = $service->getCurrentView(strtoupper($option), $input);
+//$response->canManipulate($tracker, $input);
+//echo "<br>".$response->parseToString()."<br>";
+//print_r($tracker);
+//echo "<br>".$response->getNext();
 $tracker = new stdClass();
-$tracker->payload = json_encode(['network' => 'GLO', ]);
-$tracker->network = 'VOD';
+$tracker->payload = '';
 $tracker->type = 'own';
-$tracker->authorization = 'non-registered';
-$input = '0545112466';
-$option = 'korba_airtime_num_confirm';
-$service = new \Korba\Services($pverify);
-$service->canProcess($tracker, $input, strtoupper($option));
-$response = $service->getCurrentView(strtoupper($option), $input);
-$response->canManipulate($tracker, $input);
-echo "<br>".$response->parseToString()."<br>";
-print_r($tracker);
-echo "<br>".$response->getNext();
+$tracker->authorization = 'registered';
+$tracker->phone_number = '+233545112466';
+$tracker->network = 'MTN';
+$input = '1';
+$target = '1';
+$option = 'korba_airtime_auth';
+
+$response = \Korba\ExampleServiceScript::copyMe($tracker, $input, $target, strtoupper($option));
+echo $response->parseToString()."<br>";
+echo $response->getNext();
 
 
