@@ -6,7 +6,7 @@ namespace Korba;
 
 class Thanks extends View
 {
-    public function __construct($success = false,$network = "INF")
+    public function __construct($network = "INF", $success = false)
     {
         if ($success) {
             $content = "Thanks, transaction completed Successfully";
