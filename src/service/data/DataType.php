@@ -22,7 +22,7 @@ class DataType extends View
             parent::__construct($content, 'korba_data_list', 1, 4, $type_list, $type_iter);
         } else {
             $list = array_map('ucfirst', DataType::$type_mtn);
-            parent::__construct($content, 'korba_data_list', 1, 4, $list);
+            parent::__construct($content, 'korba_data_list', 1, 6, $list);
         }
     }
 }
