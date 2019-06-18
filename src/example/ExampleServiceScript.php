@@ -395,7 +395,7 @@ class ExampleServiceScript
                     return new Error('Could not retrieve accounts list');
                 }
 
-            case "KORBA_util_PIN":
+            case "KORBA_UTIL_PIN":
                 /*
                  * Save the account number
                  * Replace with your own function
