@@ -268,6 +268,89 @@ class ExampleServiceScript
                     return new Thanks($tracker->network);
                 }
 
+            case "KORBA_TV_NUM":
+                if (intval($input) >= 1 && intval($input <= 3)) {
+                    $tracker->type = TvMenu::$tv[intval($input) - 1];
+                    return new AccountNumber('korba_data_confirm');
+                } else {
+                    return new Error();
+                }
+
+            case "KORBA_TV_CONFIRM":
+                $next = 'korba_tv_amount';
+                $tracker->payload = json_encode(['number' => $input]);
+                return Util::verifyNumber($input) ? new Confirm($next, $input) : new Error('Invalid Account Number');
+
+            case "KORBA_TV_AMOUNT":
+                return $input == '1' ? new Amount('korba_tv_confirmation') : new Error();
+
+            case "KORBA_TV_CONFIRMATION":
+                $payload = json_decode($tracker->payload, true);
+                $xchange = new XChangeV1('fd2f9df0d6876e88c6e81f7a4748c90c207ebb497bd4822ef689628b0045743b', '457b43b4e30a0be7c94fb0544ba3e10d3b900fff', '9');
+                $number = $payload['number'];
+                $tv = $xchange->etransact_validate($payload['number'], strtoupper($tracker->type), $tracker->transaction_id);
+                $next = $tracker->network == 'VOD' ? 'korba_tv_vod' : 'korba_tv_auth';
+                if ($has_accounts) {
+                    $next = 'korba_tv_pay';
+                }
+                $tracker->amount = $input;
+                return Util::verifyAmount($input) ? new ConfirmationPage($next, 'TV', $number, $input) : new Error('Invalid Amount Entered');
+
+            case "KORBA_TV_PAY":
+                return $input == '1' ? new PayFrom('korba_tv_acc_momo') : new Error();
+
+            case "KORBA_TV_ACC_MOMO":
+                // TODO redirect when option 2 is selected using the redirect function
+                /*
+                 * Replace Accounts with your own functions to produce
+                 * Accounts
+                 * hints: it can be NameOfAppAccounts()
+                 */
+                $acc = ['code' => 200, 'message' => [['acc_no' => 'First'], ['acc_no' => 'Second']]];
+                if ($acc['code'] == 200) {
+                    return new Accounts('korba_tv_pin', $target, $acc['message'], ['acc_no', 'acc_no']);
+                } else {
+                    return new Error('Could not retrieve accounts list');
+                }
+
+            case "KORBA_TV_PIN":
+                /*
+                 * Save the account number
+                 * Replace with your own function
+                 */
+//                $tracker->account_number
+                $acc = ['code' => 200, 'message' => [['acc_no' => 'First'], ['acc_no' => 'Second']]];
+                if ($acc['code'] == 200) {
+                    $tracker->account_number = json_encode($acc['message'][intval($input) - 1]);
+                    return new Pin('korba_tv_auth');
+                } else {
+                    return new Error('Could not retrieve accounts list');
+                }
+
+            case "KORBA_TV_VOD":
+                return new Voucher('korba_airtime_auth');
+
+            case "KORBA_TV_AUTH":
+                /*
+                 * Write your payment functions here
+                 */
+                $payload = json_decode($tracker->payload, true);
+                $acc = json_decode($tracker->account_number,true);
+                if ($tracker->authorization == 'registered' && $has_accounts && $acc) {
+                    $pay = ['code' => 200, 'message' => 'Transaction Successful'];
+                    if ($pay['code'] == 200) {
+                        return new Thanks('DONE', true);
+                    } else {
+                        return new Error('Error during payment, try again');
+                    }
+                } else {
+                    // Make null for non-vodafone
+                    $input = $tracker->network == 'VOD' ? $input : null;
+                    $pay = ['code' => 200, 'message' => 'Transaction Successful'];
+                    return new Thanks($tracker->network);
+                }
+
+
             default:
                 return new Error();
         }
@@ -277,5 +360,6 @@ class ExampleServiceScript
         $suffix = $tracker->network == 'VOD' ? 'VOD' : 'AUTH';
         Util::redirect('2', $input, 'redirected', $option, 'KORBA_AIRTIME_ACC_MOMO', "KORBA_AIRTIME_{$suffix}");
         Util::redirect('2', $input, 'redirected', $option, 'KORBA_DATA_ACC_MOMO', "KORBA_DATA_{$suffix}");
+        Util::redirect('2', $input, 'redirected', $option, 'KORBA_TV_ACC_MOMO', "KORBA_TV_{$suffix}");
     }
 }

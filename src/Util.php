@@ -189,7 +189,15 @@ final class Util
      * @return boolean
      */
     public static function verifyAmount($amount) {
-        return preg_match('/^[0-9]+(?:\.[0-9]{1,2})?$/', $amount) ? true : false;
+        return preg_match("/^[0-9]+(?:\.[0-9]{1,2})?$/", $amount) ? true : false;
+    }
+
+    /**
+     * @param string $amount
+     * @return boolean
+     */
+    public static function verifyNumber($amount) {
+        return preg_match("/^[0-9]*$/", $amount) ? true : false;
     }
 
     /**

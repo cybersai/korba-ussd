@@ -6,6 +6,20 @@ namespace Korba;
 
 class TvMenu extends View
 {
+
+    public static $tv = [
+        'dstv',
+        'kwesetv',
+        'gotv'
+    ];
+
+
+    public static $tv_human = [
+        'dstv' => 'DSTV',
+        'kwesetv' => 'KWESE TV',
+        'gotv' => 'GOTV'
+    ];
+
     public function __construct()
     {
         $content = "Tv Bills\n";
