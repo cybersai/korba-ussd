@@ -52,10 +52,9 @@ class ExampleServiceScript
                 $net  = $tracker->type == 'other' ? $payload['network'] : $tracker->network;
                 $network = AirtimeNetwork::$human_network[$net];
                 $number = $tracker->type == 'other' ? $payload['number'] : Util::numberGHFormat($tracker->phone_number);
-                if ($tracker->authorization != 'registered') {
-                    $next = $tracker->network == 'VOD' ? 'korba_airtime_vod' : 'korba_airtime_auth';
-                } else {
-                    $next = $has_accounts ? 'korba_airtime_pay' : 'korba_airtime_auth';
+                $next = $tracker->network == 'VOD' ? 'korba_airtime_vod' : 'korba_airtime_auth';
+                if ($has_accounts) {
+                    $next = 'korba_airtime_pay';
                 }
                 $tracker->amount = $input;
                 return Util::verifyAmount($input) ? new ConfirmationPage($next, 'Airtime', $number, $input) : new Error('Invalid Amount Entered');
@@ -197,10 +196,9 @@ class ExampleServiceScript
                 if (!$data_list['success']) {
                     return new Error('Could not retrieve bundle list');
                 }
-                if ($tracker->authorization != 'registered') {
-                    $next = $tracker->network == 'VOD' ? 'korba_data_vod' : 'korba_data_auth';
-                } else {
-                    $next = $has_accounts ? 'korba_data_pay' : 'korba_data_auth';
+                $next = $tracker->network == 'VOD' ? 'korba_airtime_vod' : 'korba_airtime_auth';
+                if ($has_accounts) {
+                    $next = 'korba_airtime_pay';
                 }
                 $number = $payload['number'];
                 if (Util::verifyWholeNumber($input)) {
@@ -276,7 +274,7 @@ class ExampleServiceScript
     }
 
     public static function redirect($tracker, &$input, &$option) {
-        $suffix = $tracker->type == 'VOD' ? 'VOD' : 'AUTH';
+        $suffix = $tracker->network == 'VOD' ? 'VOD' : 'AUTH';
         Util::redirect('2', $input, 'redirected', $option, 'KORBA_AIRTIME_ACC_MOMO', "KORBA_AIRTIME_{$suffix}");
         Util::redirect('2', $input, 'redirected', $option, 'KORBA_DATA_ACC_MOMO', "KORBA_DATA_{$suffix}");
     }
