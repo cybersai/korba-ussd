@@ -196,9 +196,9 @@ class ExampleServiceScript
                 if (!$data_list['success']) {
                     return new Error('Could not retrieve bundle list');
                 }
-                $next = $tracker->network == 'VOD' ? 'korba_airtime_vod' : 'korba_airtime_auth';
+                $next = $tracker->network == 'VOD' ? 'korba_data_vod' : 'korba_data_auth';
                 if ($has_accounts) {
-                    $next = 'korba_airtime_pay';
+                    $next = 'korba_data_pay';
                 }
                 $number = $payload['number'];
                 if (Util::verifyWholeNumber($input)) {
