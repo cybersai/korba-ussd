@@ -193,11 +193,11 @@ final class Util
     }
 
     /**
-     * @param string $amount
+     * @param string $number
      * @return boolean
      */
-    public static function verifyNumber($amount) {
-        return preg_match("/^[0-9]*$/", $amount) ? true : false;
+    public static function verifyNumber($number) {
+        return preg_match("/^[0-9]*$/", $number) ? true : false;
     }
 
     /**

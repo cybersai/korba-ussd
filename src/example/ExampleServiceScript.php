@@ -271,7 +271,7 @@ class ExampleServiceScript
             case "KORBA_TV_NUM":
                 if (intval($input) >= 1 && intval($input <= 3)) {
                     $tracker->type = TvMenu::$tv[intval($input) - 1];
-                    return new AccountNumber('korba_data_confirm');
+                    return new AccountNumber('korba_tv_confirm');
                 } else {
                     return new Error();
                 }
@@ -328,7 +328,7 @@ class ExampleServiceScript
                 }
 
             case "KORBA_TV_VOD":
-                return new Voucher('korba_airtime_auth');
+                return new Voucher('korba_tv_auth');
 
             case "KORBA_TV_AUTH":
                 /*
