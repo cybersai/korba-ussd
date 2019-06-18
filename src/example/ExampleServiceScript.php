@@ -350,6 +350,88 @@ class ExampleServiceScript
                     return new Thanks($tracker->network);
                 }
 
+            case "KORBA_UTIL_NUM":
+                if ($input == '1' || $input == '2') {
+                    $tracker->type = UtilMenu::$tv[intval($input) - 1];
+                    return new AccountNumber('korba_util_confirm');
+                } else {
+                    return new Error();
+                }
+
+            case "KORBA_UTIL_CONFIRM":
+                $next = 'korba_util_amount';
+                $tracker->payload = json_encode(['number' => $input]);
+                return Util::verifyNumber($input) ? new Confirm($next, $input) : new Error('Invalid Account Number');
+
+            case "KORBA_UTIL_AMOUNT":
+                return $input == '1' ? new Amount('korba_util_confirmation') : new Error();
+
+            case "KORBA_UTIL_CONFIRMATION":
+                $payload = json_decode($tracker->payload, true);
+                $xchange = new XChangeV1('fd2f9df0d6876e88c6e81f7a4748c90c207ebb497bd4822ef689628b0045743b', '457b43b4e30a0be7c94fb0544ba3e10d3b900fff', '9');
+                $number = $payload['number'];
+//                $util = $xchange->etransact_validate($payload['number'], strtoupper($tracker->type), $tracker->transaction_id);
+                $next = $tracker->network == 'VOD' ? 'korba_util_vod' : 'korba_util_auth';
+                if ($has_accounts) {
+                    $next = 'korba_util_pay';
+                }
+                $tracker->amount = $input;
+                return Util::verifyAmount($input) ? new ConfirmationPage($next, UtilMenu::$tv_human[$tracker->type], $number, $input) : new Error('Invalid Amount Entered');
+
+            case "KORBA_UTIL_PAY":
+                return $input == '1' ? new PayFrom('korba_tv_acc_momo') : new Error();
+
+            case "KORBA_UTIL_ACC_MOMO":
+                // TODO redirect when option 2 is selected using the redirect function
+                /*
+                 * Replace Accounts with your own functions to produce
+                 * Accounts
+                 * hints: it can be NameOfAppAccounts()
+                 */
+                $acc = ['code' => 200, 'message' => [['acc_no' => 'First'], ['acc_no' => 'Second']]];
+                if ($acc['code'] == 200) {
+                    return new Accounts('korba_util_pin', $target, $acc['message'], ['acc_no', 'acc_no']);
+                } else {
+                    return new Error('Could not retrieve accounts list');
+                }
+
+            case "KORBA_util_PIN":
+                /*
+                 * Save the account number
+                 * Replace with your own function
+                 */
+//                $tracker->account_number
+                $acc = ['code' => 200, 'message' => [['acc_no' => 'First'], ['acc_no' => 'Second']]];
+                if ($acc['code'] == 200) {
+                    $tracker->account_number = json_encode($acc['message'][intval($input) - 1]);
+                    return new Pin('korba_util_auth');
+                } else {
+                    return new Error('Could not retrieve accounts list');
+                }
+
+            case "KORBA_UTIL_VOD":
+                return new Voucher('korba_util_auth');
+
+            case "KORBA_UTIL_AUTH":
+                /*
+                 * Write your payment functions here
+                 */
+                $payload = json_decode($tracker->payload, true);
+                $acc = json_decode($tracker->account_number,true);
+                if ($tracker->authorization == 'registered' && $has_accounts && $acc) {
+                    $pay = ['code' => 200, 'message' => 'Transaction Successful'];
+                    if ($pay['code'] == 200) {
+                        return new Thanks('DONE', true);
+                    } else {
+                        return new Error('Error during payment, try again');
+                    }
+                } else {
+                    // Make null for non-vodafone
+                    $input = $tracker->network == 'VOD' ? $input : null;
+                    $pay = ['code' => 200, 'message' => 'Transaction Successful'];
+                    return new Thanks($tracker->network);
+                }
+
 
             default:
                 return new Error();

@@ -6,6 +6,18 @@ namespace Korba;
 
 class UtilMenu extends View
 {
+
+    public static $tv = [
+        'ecg',
+        'gwcl'
+    ];
+
+
+    public static $tv_human = [
+        'ecg' => 'ECG',
+        'gwcl' => 'Ghana Water'
+    ];
+
     public function __construct()
     {
         $content = "Utilities\n";
