@@ -101,7 +101,7 @@ class ExampleServiceScript
                 $acc = json_decode($tracker->account_number,true);
                 $recepient_number = $tracker->type == 'own' ? Util::numberGHFormat($tracker->phone_number) : $payload['number'];
                 $network = $tracker->type == 'own' ? $tracker->network : $payload['network'];
-                if ($tracker->authorization == 'registered' && $has_accounts && $input != 'redirected') {
+                if ($tracker->authorization == 'registered' && $has_accounts && $acc) {
                     $pay = ['code' => 200, 'message' => 'Transaction Successful'];
                     if ($pay['code'] == 200) {
                         return new Thanks('DONE', true);
@@ -254,7 +254,7 @@ class ExampleServiceScript
                 $payload = json_decode($tracker->payload, true);
                 $acc = json_decode($tracker->account_number,true);
                 $recepient_number = $payload['number'];
-                if ($tracker->authorization == 'registered' && $has_accounts && $input != 'redirected') {
+                if ($tracker->authorization == 'registered' && $has_accounts && $acc) {
                     $pay = ['code' => 200, 'message' => 'Transaction Successful'];
                     if ($pay['code'] == 200) {
                         return new Thanks('DONE', true);
