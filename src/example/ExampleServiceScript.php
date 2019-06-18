@@ -379,7 +379,7 @@ class ExampleServiceScript
                 return Util::verifyAmount($input) ? new ConfirmationPage($next, UtilMenu::$tv_human[$tracker->type], $number, $input) : new Error('Invalid Amount Entered');
 
             case "KORBA_UTIL_PAY":
-                return $input == '1' ? new PayFrom('korba_tv_acc_momo') : new Error();
+                return $input == '1' ? new PayFrom('korba_util_acc_momo') : new Error();
 
             case "KORBA_UTIL_ACC_MOMO":
                 // TODO redirect when option 2 is selected using the redirect function
@@ -443,5 +443,6 @@ class ExampleServiceScript
         Util::redirect('2', $input, 'redirected', $option, 'KORBA_AIRTIME_ACC_MOMO', "KORBA_AIRTIME_{$suffix}");
         Util::redirect('2', $input, 'redirected', $option, 'KORBA_DATA_ACC_MOMO', "KORBA_DATA_{$suffix}");
         Util::redirect('2', $input, 'redirected', $option, 'KORBA_TV_ACC_MOMO', "KORBA_TV_{$suffix}");
+        Util::redirect('2', $input, 'redirected', $option, 'KORBA_UTIL_ACC_MOMO', "KORBA_UTIL_{$suffix}");
     }
 }
