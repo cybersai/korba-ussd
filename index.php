@@ -1,63 +1,8 @@
 <?php
 
+use Korba\XChangeV1;
+
 require 'vendor/autoload.php';
-
-class Verify extends \Korba\VerifyAccounts {
-
-    public function getAccount($num, $pos)
-    {
-        $accounts = [
-            ['acc_no' => '2313123', 'acc_name' => 'Test'],
-            ['acc_no' => '312312', 'acc_name' => 'Test 2']
-        ];
-        return $accounts[$num - 1];
-    }
-
-    public function process(&$tracker, $input)
-    {
-        $accounts = [
-            ['acc_no' => '2313123', 'acc_name' => 'Test'],
-            ['acc_no' => '312312', 'acc_name' => 'Test 2']
-        ];
-        if ($accounts) {
-            $this->setView($this->getView(1));
-            print_r($this->getSelectedView(1));
-            echo '<br><br>';
-            $this->getSelectedView(1)->setContent('Testing 2');
-            $this->getSelectedView(1)->setIterableList($accounts);
-            $this->getSelectedView(1)->setPage(1);
-            $this->getSelectedView(1)->setNumberPerPage(4);
-            echo $this->getSelectedView(1)->getContent()."<br>";
-            $this->getSelectedView(1)->setIterator(['acc_no', 'acc_name']);
-        } else {
-            $this->setView($this->getView(2));
-            if ($tracker->network == 'VOD') {
-                $this->getSelectedView(2)->setNext('korba_airtime_vod');
-            }
-        }
-    }
-}
-
-class VerifyP extends \Korba\VerifyPayment {
-
-    public function process(&$tracker, $input)
-    {
-        $paid = false;
-        if ($paid) {
-            $this->setView($this->getView(1));
-            print_r($this->getSelectedView(1));
-            echo '<br><br>';
-//            $this->getSelectedView(1)->setContent('Testing 2');
-
-            echo $this->getSelectedView(1)->getContent()."<br>";
-            $this->getSelectedView(1)->setIterator(['acc_no', 'acc_name']);
-        } else {
-            $this->setView($this->getView(2));
-        }
-    }
-}
-
-
 
 
 
@@ -79,17 +24,19 @@ class VerifyP extends \Korba\VerifyPayment {
 //print_r($tracker);
 //echo "<br>".$response->getNext();
 $tracker = new stdClass();
-$tracker->payload = '';
-$tracker->type = 'own';
+//$tracker->payload = json_encode(['number' => '0255125984']);
+$tracker->payload = json_encode(['number' => '157894']);
+$tracker->type = 'mtn_fibre';
 $tracker->authorization = 'registered';
 $tracker->phone_number = '+233545112466';
 $tracker->network = 'MTN';
-$input = '1';
+$input = '2';
 $target = '1';
-$option = 'KORBA_AIRTIME_ACC_MOMO';
+$option = 'KORBA_DATA_CONFIRMATION';
 
 $response = \Korba\ExampleServiceScript::copyMe($tracker, $input, $target, strtoupper($option));
 echo $response->parseToString()."<br>";
-echo $response->getNext();
+echo $response->getNext()."<br>";
 
-
+$xchange = new XChangeV1('fd2f9df0d6876e88c6e81f7a4748c90c207ebb497bd4822ef689628b0045743b', '457b43b4e30a0be7c94fb0544ba3e10d3b900fff', '9');
+echo \Korba\Util::verifyWholeNumber('1') ? "True" : "False";

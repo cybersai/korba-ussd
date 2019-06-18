@@ -169,6 +169,22 @@ final class Util
     }
 
     /**
+     * @param string $number
+     * @return boolean
+     */
+    public static function verifyNumberLength($number, $length = 10) {
+        return preg_match("/^[0-9]{".$length."}$/", $number) ? true : false;
+    }
+
+    /**
+     * @param string $number
+     * @return boolean
+     */
+    public static function verifyWholeNumber($number) {
+        return preg_match("/^[1-9][0-9]*$/", $number) ? true : false;
+    }
+
+    /**
      * @param string $amount
      * @return boolean
      */

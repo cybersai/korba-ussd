@@ -148,7 +148,23 @@ final class XChangeV1 extends API
         $data = [
             'customer_number' => $customer_number
         ];
-        return $this->call('get_surfline_bundles/', $data);
+        $result = $this->call('get_surfline_bundles/', $data);
+        if ($result['success']) {
+            $list = [];
+            foreach ($result['bundles'] as $bundle) {
+                array_push($list, [
+                    'id' => $bundle['bundle_id'],
+                    'description' => $bundle['description'],
+                    'price' => $bundle['price'],
+                    'validity' => $bundle['validity']
+                ]);
+            }
+            return [
+                'success' => true,
+                'bundles' => $list
+            ];
+        }
+        return $result;
     }
 
     public function busy_purchase(
@@ -164,7 +180,26 @@ final class XChangeV1 extends API
         $data = [
             'customer_number' => $customer_number
         ];
-        return $this->call('get_busy_bundles/', $data);
+        $result = $this->call('get_busy_bundles/', $data);
+        if ($result['success']) {
+            $list = [];
+            foreach ($result['list'] as $bundles) {
+                foreach ($bundles['Bundle'] as $bundle) {
+                    foreach ($bundle as $item) {
+                        array_push($list, [
+                            'id' => $item['PricePlanCode'],
+                            'description' => $item['PricePlanName'],
+                            'price' => $item['SalesPrice']
+                        ]);
+                    }
+                }
+            }
+            return [
+                'success' => true,
+                'bundles' => $list
+            ];
+        }
+        return $result;
     }
 
     public function telesol_purchase(
@@ -245,8 +280,56 @@ final class XChangeV1 extends API
         return $this->call('mtn_data_topup/', $data);
     }
 
-    public function mtn_bundles() {
-        return $this->call('get_mtndata_product_id/', []);
+    public function mtn_bundles($filter = null) {
+        $result = $this->call('get_mtndata_product_id/', []);
+        $list = [];
+        if ($result['success']) {
+            foreach ($result['bundles'] as $bundle) {
+                array_push($list, [
+                    'id' => $bundle['product_id'],
+                    'price' => $bundle['amount'],
+                    'description' => $bundle['name']
+                ]);
+            }
+            $list = $this->mtn_filter($list, $filter);
+            return [
+                'success' => true,
+                'bundles' => $list
+            ];
+        }
+        return $result;
+    }
+
+    private function mtn_filter($bundles, $filter = null) {
+        if (in_array($filter, ['daily', 'weekly', 'monthly', 'midnight', 'lifestyle', 'youtube'])) {
+            if ($filter == 'daily') {
+                $result = array_filter($bundles, function ($product) {
+                    return preg_match("/^MTNDLY*/", $product['id']);
+                });
+            } else if ($filter == 'weekly') {
+                $result = array_filter($bundles, function ($product) {
+                    return preg_match("/^MTNWKLY*/", $product['id']);
+                });
+            } else if ($filter == 'monthly') {
+                $result = array_filter($bundles, function ($product) {
+                    return preg_match("/^MTNMTH*/", $product['id']);
+                });
+            } else if ($filter == 'midnight') {
+                $result = array_filter($bundles, function ($product) {
+                    return preg_match("/^MTNMIDNGT3G$/", $product['id']) || preg_match("/^MTNMIDNIGHT$/", $product['id']);
+                });
+            } else if ($filter == 'lifestyle') {
+                $result = array_filter($bundles, function ($product) {
+                    return preg_match("/^MTNLIFESTYLE$/", $product['id']);
+                });
+            } else {
+                $result = array_filter($bundles, function ($product) {
+                    return preg_match("/^MTNYT*/", $product['id']);
+                });
+            }
+            return array_values($result);
+        }
+        return $bundles;
     }
 
     public function mtn_fibre_purchase(
@@ -259,7 +342,22 @@ final class XChangeV1 extends API
     }
 
     public function mtn_fibre_bundles() {
-        return $this->call('get_mtnfibre_product_id/', []);
+        $result = $this->call('get_mtnfibre_product_id/', []);
+        $list = [];
+        if ($result['success']) {
+            foreach ($result['bundles'] as $bundle) {
+                array_push($list, [
+                    'id' => $bundle['product_id'],
+                    'price' => $bundle['amount'],
+                    'description' => $bundle['name']
+                ]);
+            }
+            return [
+                'success' => true,
+                'bundles' => $list
+            ];
+        }
+        return $result;
     }
 
     public function airteltigo_purchase(
@@ -272,7 +370,62 @@ final class XChangeV1 extends API
     }
 
     public function airteltigo_bundles() {
-        return $this->call('get_airteltigodata_product_id/', []);
+        $result = $this->call('get_airteltigodata_product_id/', []);
+        $list = [];
+        if ($result['success']) {
+            foreach ($result['bundles'] as $bundle) {
+                array_push($list, [
+                    'id' => $bundle['product_id'],
+                    'price' => $bundle['amount'],
+                    'description' => "{$bundle['name']} @ {$bundle['amount']}"
+                ]);
+            }
+            return [
+                'success' => true,
+                'bundles' => $list
+            ];
+        }
+        return $result;
+    }
+
+    public function glo_types() {
+        return $this->call('glo_data_get_bundle_types/', []);
+    }
+
+    public function glo_bundles($bundle_type_id) {
+        $data = ['bundle_type_id' => $bundle_type_id];
+        $result = $this->call('glo_data_get_bundles/', $data);
+        $list = [];
+        if ($result['success']) {
+            foreach ($result['results'] as $bundle) {
+                array_push($list, [
+                    'id' => $bundle['productId'],
+                    'description' => $bundle['name'],
+                    'price' => $bundle['price'],
+                    'volume' => $bundle['volume']
+                ]);
+            }
+            return [
+                'success' => true,
+                'bundles' => $list
+            ];
+        }
+        return $result;
+    }
+
+    public function glo_purchase($customer_number, $bundle_id, $amount, $transaction_id, $callback_url, $description = null) {
+        $data = [
+            'customer_number' => $customer_number,
+            'bundle_id' => $bundle_id,
+            'amount' => $amount,
+            'transaction_id' => $transaction_id,
+            'callback_url' => $callback_url
+        ];
+        $opt_data = ['description' => $description];
+        $this->add_optional_data($data, $opt_data);
+
+        $result = $this->call('/glo_data_purchase/', $data);
+        return $result;
     }
 
     public function etransact_validate($customer_number, $bill_type, $transaction_id) {
