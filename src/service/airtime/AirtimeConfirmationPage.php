@@ -4,10 +4,11 @@
 namespace Korba;
 
 
-class AirtimeConfirmationPage extends ConfirmationPage
+class AirtimeConfirmationPage extends View
 {
-    public function __construct($next = 'korba_airtime_auth', $provider = '', $account = '', $amount = 0, $fee = 0)
+    public function __construct($number, $network, $amount, $next)
     {
-        parent::__construct($next, $provider, $account, $amount, $fee);
+        $content = "Confirm\nAirtime Topup\nNumber:{$number}\nNetwork:{$network}\nAmount:{$amount}";
+        parent::__construct($content, $next,1,null, null, null, "1.Ok\n#.Back\nMain Menu");
     }
 }

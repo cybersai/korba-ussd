@@ -10,15 +10,17 @@ final class XChangeV1 extends API
     private $secret_key;
     private $client_key;
     private $client_id;
-    private static $url = 'https://xchange.korbaweb.com/api/v1.0';
+    private static $live_url = 'https://xchange.korbaweb.com/api/v1.0';
+    private static $test_url = 'https://korbaxchange.herokuapp.com/api/v1.0';
 
-    public function __construct($secret_key, $client_key, $client_id, $proxy = null)
+    public function __construct($secret_key, $client_key, $client_id, $mode  = 'test', $proxy = null)
     {
         $headers = array(
             'Cache-Control: no-cache',
             'Content-Type: application/json'
         );
-        parent::__construct(XChangeV1::$url, $headers, $proxy);
+        $url = $mode == 'test' ? XChangeV1::$test_url : XChangeV1::$live_url;
+        parent::__construct($url, $headers, $proxy);
         $this->secret_key = $secret_key;
         $this->client_key = $client_key;
         $this->client_id = $client_id;

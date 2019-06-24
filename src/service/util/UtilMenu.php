@@ -7,13 +7,13 @@ namespace Korba;
 class UtilMenu extends View
 {
 
-    public static $tv = [
+    public static $util = [
         'ecg',
         'gwcl'
     ];
 
 
-    public static $tv_human = [
+    public static $util_human = [
         'ecg' => 'ECG',
         'gwcl' => 'Ghana Water'
     ];

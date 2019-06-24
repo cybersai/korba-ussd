@@ -10,7 +10,7 @@ class ConfirmationPage extends View
     {
         $total = $amount + $fee;
         $content = "Confirm\nProvider:{$provider}\nAccount:{$account}\nAmount:{$amount}\nFee:{$fee}\nTotal:{$total}";
-        parent::__construct($content, strtoupper($next));
+        parent::__construct($content, $next);
     }
 
     public function setAll($provider, $account, $amount, $fee = 0) {

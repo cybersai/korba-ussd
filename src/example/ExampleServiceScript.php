@@ -53,11 +53,11 @@ class ExampleServiceScript
                 $network = AirtimeNetwork::$human_network[$net];
                 $number = $tracker->type == 'other' ? $payload['number'] : Util::numberGHFormat($tracker->phone_number);
                 $next = $tracker->network == 'VOD' ? 'korba_airtime_vod' : 'korba_airtime_auth';
-                if ($has_accounts) {
+                if ($has_accounts && $tracker->authorization == 'registered') {
                     $next = 'korba_airtime_pay';
                 }
                 $tracker->amount = $input;
-                return Util::verifyAmount($input) ? new ConfirmationPage($next, 'Airtime', $number, $input) : new Error('Invalid Amount Entered');
+                return Util::verifyAmount($input) ? new AirtimeConfirmationPage($number, $network, $input, $next) : new Error('Invalid Amount Entered');
 
             case "KORBA_AIRTIME_PAY":
                 return $input == '1' ? new PayFrom('korba_airtime_acc_momo') : new Error();
@@ -197,7 +197,7 @@ class ExampleServiceScript
                     return new Error('Could not retrieve bundle list');
                 }
                 $next = $tracker->network == 'VOD' ? 'korba_data_vod' : 'korba_data_auth';
-                if ($has_accounts) {
+                if ($has_accounts && $tracker->authorization == 'registered') {
                     $next = 'korba_data_pay';
                 }
                 $number = $payload['number'];
@@ -209,7 +209,7 @@ class ExampleServiceScript
                         'input' => $payload['input'],
                         'bundle' => $bundle
                     ]);
-                    return new ConfirmationPage($next, ucfirst($tracker->type), $number, $bundle['price']);
+                    return new DataConfirmationPage($next, $number, DataMenu::$data_human[$tracker->type] , $bundle['price'], $bundle['description']);
                 }
                 return new Error('Invalid Amount Entered');
 
@@ -277,20 +277,28 @@ class ExampleServiceScript
                 }
 
             case "KORBA_TV_CONFIRM":
+                $xchange = new XChangeV1('fd2f9df0d6876e88c6e81f7a4748c90c207ebb497bd4822ef689628b0045743b', '457b43b4e30a0be7c94fb0544ba3e10d3b900fff', '9');
+                $tv = $xchange->etransact_validate($input, strtoupper($tracker->type), $tracker->transaction_id);
                 $next = 'korba_tv_amount';
-                $tracker->payload = json_encode(['number' => $input]);
-                return Util::verifyNumber($input) ? new Confirm($next, $input) : new Error('Invalid Account Number');
+                echo json_encode($tv);
+                if ($tv['success']) {
+                    $name = $tv['results']['message'];
+                    $tracker->payload = json_encode([
+                        'number' => $input,
+                        'name' => $name
+                    ]);
+                    return new TvConfirm($next, $input, $name);
+                }
+                return new Error('Invalid Account Number');
 
             case "KORBA_TV_AMOUNT":
                 return $input == '1' ? new Amount('korba_tv_confirmation') : new Error();
 
             case "KORBA_TV_CONFIRMATION":
                 $payload = json_decode($tracker->payload, true);
-                $xchange = new XChangeV1('fd2f9df0d6876e88c6e81f7a4748c90c207ebb497bd4822ef689628b0045743b', '457b43b4e30a0be7c94fb0544ba3e10d3b900fff', '9');
                 $number = $payload['number'];
-                $tv = $xchange->etransact_validate($payload['number'], strtoupper($tracker->type), $tracker->transaction_id);
                 $next = $tracker->network == 'VOD' ? 'korba_tv_vod' : 'korba_tv_auth';
-                if ($has_accounts) {
+                if ($has_accounts && $tracker->authorization == 'registered') {
                     $next = 'korba_tv_pay';
                 }
                 $tracker->amount = $input;
@@ -352,31 +360,58 @@ class ExampleServiceScript
 
             case "KORBA_UTIL_NUM":
                 if ($input == '1' || $input == '2') {
-                    $tracker->type = UtilMenu::$tv[intval($input) - 1];
-                    return new AccountNumber('korba_util_confirm');
+                    $tracker->type = UtilMenu::$util[intval($input) - 1];
+                    return $input == '1' ? new AccountNumber('korba_util_confirm') : new AccountNumber('korba_util_acc', 'customer phone');
                 } else {
                     return new Error();
                 }
 
+            case "KORBA_UTIL_ACC":
+                $tracker->payload = json_encode(['phone' => $input]);
+                return new AccountNumber('korba_util_confirm');
+
             case "KORBA_UTIL_CONFIRM":
+                $xchange = new XChangeV1('fd2f9df0d6876e88c6e81f7a4748c90c207ebb497bd4822ef689628b0045743b', '457b43b4e30a0be7c94fb0544ba3e10d3b900fff', '9');
                 $next = 'korba_util_amount';
+                if ($tracker->type == 'gwcl') {
+                    $payload = json_decode($tracker->payload, true);
+                    $util = $xchange->gwcl_lookup($payload['phone'], $input, $tracker->transaction_id);
+                    if ($util['success']) {
+                        $name = $util['results']['payload']['name'];
+                        $tracker->payload = json_encode([
+                            'phone' => $payload['phone'],
+                            'number' => $input,
+                            'name' => $name,
+                            'id' => $util['results']['transaction_id']
+                        ]);
+                        return new UtilConfirm($next, $input, $name);
+                    }
+                } else {
+                    $util = $xchange->etransact_validate($input, 'ECG', $tracker->transaction_id);
+                    if ($util['success']) {
+                        $name = $util['results']['message'];
+                        $tracker->payload = json_encode([
+                            'number' => $input,
+                            'name' => $name
+                        ]);
+                        return new UtilConfirm($next, $input, $name);
+                    }
+                }
                 $tracker->payload = json_encode(['number' => $input]);
-                return Util::verifyNumber($input) ? new Confirm($next, $input) : new Error('Invalid Account Number');
+                return new Error('Invalid Account Number');
 
             case "KORBA_UTIL_AMOUNT":
                 return $input == '1' ? new Amount('korba_util_confirmation') : new Error();
 
             case "KORBA_UTIL_CONFIRMATION":
                 $payload = json_decode($tracker->payload, true);
-                $xchange = new XChangeV1('fd2f9df0d6876e88c6e81f7a4748c90c207ebb497bd4822ef689628b0045743b', '457b43b4e30a0be7c94fb0544ba3e10d3b900fff', '9');
                 $number = $payload['number'];
-//                $util = $xchange->etransact_validate($payload['number'], strtoupper($tracker->type), $tracker->transaction_id);
                 $next = $tracker->network == 'VOD' ? 'korba_util_vod' : 'korba_util_auth';
-                if ($has_accounts) {
+                if ($has_accounts && $tracker->authorization == 'registered') {
                     $next = 'korba_util_pay';
                 }
                 $tracker->amount = $input;
-                return Util::verifyAmount($input) ? new ConfirmationPage($next, UtilMenu::$tv_human[$tracker->type], $number, $input) : new Error('Invalid Amount Entered');
+                return Util::verifyAmount($input) ? new UtilConfirmationPage($next, $number, UtilMenu::$util_human[$tracker->type], $payload['name'], $input) : new Error('Invalid Amount Entered');
 
             case "KORBA_UTIL_PAY":
                 return $input == '1' ? new PayFrom('korba_util_acc_momo') : new Error();
