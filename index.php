@@ -7,22 +7,6 @@ require 'vendor/autoload.php';
 
 
 
-//$verify = new Verify();
-//$pverify = new VerifyP();
-//$tracker = new stdClass();
-//$tracker->payload = json_encode(['network' => 'GLO', ]);
-//$tracker->network = 'VOD';
-//$tracker->type = 'own';
-//$tracker->authorization = 'non-registered';
-//$input = '0545112466';
-//$option = 'korba_airtime_num_confirm';
-//$service = new \Korba\Services($pverify);
-//$service->canProcess($tracker, $input, strtoupper($option));
-//$response = $service->getCurrentView(strtoupper($option), $input);
-//$response->canManipulate($tracker, $input);
-//echo "<br>".$response->parseToString()."<br>";
-//print_r($tracker);
-//echo "<br>".$response->getNext();
 $tracker = new stdClass();
 //$tracker->payload = json_encode(['number' => '0255125984']);
 $tracker->payload = json_encode(['number' => '157894']);

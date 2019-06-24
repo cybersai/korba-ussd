@@ -280,8 +280,7 @@ class ExampleServiceScript
                 $xchange = new XChangeV1('fd2f9df0d6876e88c6e81f7a4748c90c207ebb497bd4822ef689628b0045743b', '457b43b4e30a0be7c94fb0544ba3e10d3b900fff', '9');
                 $tv = $xchange->etransact_validate($input, strtoupper($tracker->type), $tracker->transaction_id);
                 $next = 'korba_tv_amount';
-                echo json_encode($tv);
-                if ($tv['success']) {
+                if (!$tv['error_code']) {
                     $name = $tv['results']['message'];
                     $tracker->payload = json_encode([
                         'number' => $input,
@@ -302,7 +301,7 @@ class ExampleServiceScript
                     $next = 'korba_tv_pay';
                 }
                 $tracker->amount = $input;
-                return Util::verifyAmount($input) ? new ConfirmationPage($next, 'TV', $number, $input) : new Error('Invalid Amount Entered');
+                return Util::verifyAmount($input) ? new TvConfirmationPage($next, $number,TvMenu::$tv_human[$tracker->type], $payload['name'], $input) : new Error('Invalid Amount Entered');
 
             case "KORBA_TV_PAY":
                 return $input == '1' ? new PayFrom('korba_tv_acc_momo') : new Error();
@@ -388,7 +387,7 @@ class ExampleServiceScript
                     }
                 } else {
                     $util = $xchange->etransact_validate($input, 'ECG', $tracker->transaction_id);
-                    if ($util['success']) {
+                    if (!$util['error_code']) {
                         $name = $util['results']['message'];
                         $tracker->payload = json_encode([
                             'number' => $input,
