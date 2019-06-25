@@ -381,7 +381,7 @@ class ExampleServiceScript
                             'phone' => $payload['phone'],
                             'number' => $input,
                             'name' => $name,
-                            'id' => $util['results']['transaction_id']
+                            'id' => $util['transaction_id']
                         ]);
                         return new UtilConfirm($next, $input, $name);
                     }
