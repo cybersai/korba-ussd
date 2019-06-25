@@ -10,7 +10,7 @@ class AirtimeMenu extends View
     {
         $content = "Airtime Topup\n";
         $next = 'korba_airtime_net_num';
-        $airtime_list = ["Own network", "Other network"];
+        $airtime_list = ["Own number", "Another number"];
         parent::__construct($content, $next, 1, 2, $airtime_list);
     }
 }
