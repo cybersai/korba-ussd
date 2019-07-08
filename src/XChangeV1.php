@@ -248,9 +248,10 @@ final class XChangeV1 extends API
         $data = [
             'transaction_id' => $gwcl_transaction_id,
             'amount' => $amount,
-            'callback_url' => $callback_url,
-            'description' => $description
+            'callback_url' => $callback_url
         ];
+        $opt_data = ['description' => $description];
+        $this->add_optional_data($data, $opt_data);
         return $this->call('gwcl_pay_bill/', $data);
     }
 
@@ -426,7 +427,7 @@ final class XChangeV1 extends API
         $opt_data = ['description' => $description];
         $this->add_optional_data($data, $opt_data);
 
-        $result = $this->call('/glo_data_purchase/', $data);
+        $result = $this->call('glo_data_purchase/', $data);
         return $result;
     }
 

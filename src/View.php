@@ -237,7 +237,7 @@ class View {
             if ($nested_indices == null) {
                 $msg .= "{$num}.{$array[$i + $start_index]}\n";
             } else {
-                $msg .= "{$num}.{$array[ + $start_index][$nested_indices[1]]}\n";
+                $msg .= "{$num}.{$array[$i + $start_index][$nested_indices[1]]}\n";
             }
         }
         if (self::$processNext) {
