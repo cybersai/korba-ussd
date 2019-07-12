@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Korba\Generator;
 
-class CreateTrackersTable extends Migration
+class CreateExampleTrackersTable extends Migration
 {
     /**
      * Run the migrations.

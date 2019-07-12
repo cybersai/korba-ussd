@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Korba\Generator;
 
-class Tracker extends Model
+class ExampleTracker extends Model
 {
 
     /**

@@ -9,7 +9,7 @@ use Korba\Confirm;
 use Korba\Util;
 use Korba\Thanks;
 
-class UssdController extends Controller
+class ExampleUssdController extends Controller
 {
     /**
      * @param Request $request
