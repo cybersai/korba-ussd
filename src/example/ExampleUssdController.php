@@ -3,53 +3,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Tracker;
-use GaRuralBank\ComingSoon;
-use GaRuralBank\CustomerMenu;
-use GaRuralBank\CustomerService;
-use GaRuralBank\DepositAmount;
-use GaRuralBank\DepositConfirmation;
-use GaRuralBank\DepositRef;
-use GaRuralBank\EnquireBalance;
-use GaRuralBank\EnquireStatement;
-use GaRuralBank\EnquiryAccounts;
-use GaRuralBank\EnquiryPin;
-use GaRuralBank\ErrorMessage;
-use GaRuralBank\FeeAccountAmount;
-use GaRuralBank\FeeAmount;
-use GaRuralBank\FeeInstitution;
-use GaRuralBank\FeePin;
-use GaRuralBank\FeeSource;
-use GaRuralBank\FeeSummary;
-use GaRuralBank\FundsAccount;
-use GaRuralBank\FundsAccountAmount;
-use GaRuralBank\FundsAccountConfirmation;
-use GaRuralBank\FundsAccountNoConfirm;
-use GaRuralBank\FundsAccountPin;
-use GaRuralBank\FundsAccountRef;
-use GaRuralBank\FundsOtherDestination;
-use GaRuralBank\FundsOwnDestination;
-use GaRuralBank\PinCurrent;
-use GaRuralBank\PinCurrentFirst;
-use GaRuralBank\PinMenuFirst;
-use GaRuralBank\PinNew;
-use GaRuralBank\PinNewFirst;
-use GaRuralBank\School;
-use GaRuralBank\ServiceScript;
-use GaRuralBank\SubMenu;
-use GaRuralBank\VisitorMenu;
-use GaRuralBank\VisitorService;
-use GaRuralBank\Voucher;
-use GaRuralBank\Welcome;
-use GaRuralBank\WithdrawalAmount;
-use GaRuralBank\WithdrawalConfirmation;
-use GaRuralBank\WithdrawalPin;
-use GaRuralBank\WithdrawalRef;
-use Illuminate\Http\Request;
+use App\ExampleTracker;
 use Korba\Amount;
 use Korba\Confirm;
 use Korba\Util;
-use Korba\View;
 use Korba\Thanks;
 
 class UssdController extends Controller
