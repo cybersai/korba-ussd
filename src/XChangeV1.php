@@ -12,6 +12,7 @@ final class XChangeV1 extends API
     private $client_id;
     private static $live_url = 'https://xchange.korbaweb.com/api/v1.0';
     private static $test_url = 'https://korbaxchange.herokuapp.com/api/v1.0';
+    private static $aws_url = 'http://internal-awseb-e-e-awsebloa-hw0cnhf7hgfj-113392159.eu-west-1.elb.amazonaws.com:80/api/v1.0/';
 
     public function __construct($secret_key, $client_key, $client_id, $mode  = 'test', $proxy = null)
     {
@@ -19,7 +20,13 @@ final class XChangeV1 extends API
             'Cache-Control: no-cache',
             'Content-Type: application/json'
         );
-        $url = $mode == 'test' ? XChangeV1::$test_url : XChangeV1::$live_url;
+        if ($mode == 'aws') {
+            $url = XChangeV1::$aws_url;
+        } else if($mode == 'test') {
+            $url = XChangeV1::$test_url;
+        } else {
+            $url = XChangeV1::$live_url;
+        }
         parent::__construct($url, $headers, $proxy);
         $this->secret_key = $secret_key;
         $this->client_key = $client_key;
