@@ -7,6 +7,9 @@ namespace Composer\Autoload;
 class ComposerStaticInit2b07cfbc016303a51aceb3f94f93a6fc
 {
     public static $classMap = array (
+        'App\\ExampleTracker' => __DIR__ . '/../..' . '/src/example/ExampleTracker.php',
+        'App\\Http\\Controllers\\ExampleUssdController' => __DIR__ . '/../..' . '/src/example/ExampleUssdController.php',
+        'CreateExampleTrackersTable' => __DIR__ . '/../..' . '/src/example/2019_05_05_121129_create_example_trackers_table.php',
         'Korba\\API' => __DIR__ . '/../..' . '/src/API.php',
         'Korba\\AccountNumber' => __DIR__ . '/../..' . '/src/service/AccountNumber.php',
         'Korba\\Accounts' => __DIR__ . '/../..' . '/src/service/Accounts.php',
@@ -29,6 +32,7 @@ class ComposerStaticInit2b07cfbc016303a51aceb3f94f93a6fc
         'Korba\\Param' => __DIR__ . '/../..' . '/src/Param.php',
         'Korba\\PayFrom' => __DIR__ . '/../..' . '/src/service/PayFrom.php',
         'Korba\\Pin' => __DIR__ . '/../..' . '/src/service/Pin.php',
+        'Korba\\SMS' => __DIR__ . '/../..' . '/src/SMS.php',
         'Korba\\SubMenu' => __DIR__ . '/../..' . '/src/service/SubMenu.php',
         'Korba\\Thanks' => __DIR__ . '/../..' . '/src/service/Thanks.php',
         'Korba\\TvConfirm' => __DIR__ . '/../..' . '/src/service/tv/TvConfirm.php',

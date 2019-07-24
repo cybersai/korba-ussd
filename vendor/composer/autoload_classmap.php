@@ -6,6 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\ExampleTracker' => $baseDir . '/src/example/ExampleTracker.php',
+    'App\\Http\\Controllers\\ExampleUssdController' => $baseDir . '/src/example/ExampleUssdController.php',
+    'CreateExampleTrackersTable' => $baseDir . '/src/example/2019_05_05_121129_create_example_trackers_table.php',
     'Korba\\API' => $baseDir . '/src/API.php',
     'Korba\\AccountNumber' => $baseDir . '/src/service/AccountNumber.php',
     'Korba\\Accounts' => $baseDir . '/src/service/Accounts.php',
@@ -28,6 +31,7 @@ return array(
     'Korba\\Param' => $baseDir . '/src/Param.php',
     'Korba\\PayFrom' => $baseDir . '/src/service/PayFrom.php',
     'Korba\\Pin' => $baseDir . '/src/service/Pin.php',
+    'Korba\\SMS' => $baseDir . '/src/SMS.php',
     'Korba\\SubMenu' => $baseDir . '/src/service/SubMenu.php',
     'Korba\\Thanks' => $baseDir . '/src/service/Thanks.php',
     'Korba\\TvConfirm' => $baseDir . '/src/service/tv/TvConfirm.php',
