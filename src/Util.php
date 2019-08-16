@@ -233,6 +233,14 @@ final class Util
 
     /**
      * @param $request
+     * @return bool
+     */
+    public static function isContinuingRequest($request) {
+        return ($request->ussdServiceOp == 18 ? true : false);
+    }
+
+    /**
+     * @param $request
      * @return string
      */
     public static function getRequestSessionId($request) {

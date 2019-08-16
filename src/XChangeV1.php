@@ -158,7 +158,7 @@ final class XChangeV1 extends API
             'customer_number' => $customer_number
         ];
         $result = $this->call('get_surfline_bundles/', $data);
-        if ($result['success']) {
+        if (isset($result['success']) && $result['success']) {
             $list = [];
             foreach ($result['bundles'] as $bundle) {
                 array_push($list, [
@@ -190,7 +190,7 @@ final class XChangeV1 extends API
             'customer_number' => $customer_number
         ];
         $result = $this->call('get_busy_bundles/', $data);
-        if ($result['success']) {
+        if (isset($result['success']) && $result['success']) {
             $list = [];
             foreach ($result['list'] as $bundles) {
                 foreach ($bundles['Bundle'] as $bundle) {
@@ -293,7 +293,7 @@ final class XChangeV1 extends API
     public function mtn_bundles($filter = null) {
         $result = $this->call('get_mtndata_product_id/', []);
         $list = [];
-        if ($result['success']) {
+        if (isset($result['success']) && $result['success']) {
             foreach ($result['bundles'] as $bundle) {
                 array_push($list, [
                     'id' => $bundle['product_id'],
@@ -354,7 +354,7 @@ final class XChangeV1 extends API
     public function mtn_fibre_bundles() {
         $result = $this->call('get_mtnfibre_product_id/', []);
         $list = [];
-        if ($result['success']) {
+        if (isset($result['success']) && $result['success']) {
             foreach ($result['bundles'] as $bundle) {
                 array_push($list, [
                     'id' => $bundle['product_id'],
@@ -382,7 +382,7 @@ final class XChangeV1 extends API
     public function airteltigo_bundles() {
         $result = $this->call('get_airteltigodata_product_id/', []);
         $list = [];
-        if ($result['success']) {
+        if (isset($result['success']) && $result['success']) {
             foreach ($result['bundles'] as $bundle) {
                 array_push($list, [
                     'id' => $bundle['product_id'],
@@ -406,7 +406,7 @@ final class XChangeV1 extends API
         $data = ['bundle_type_id' => $bundle_type_id];
         $result = $this->call('glo_data_get_bundles/', $data);
         $list = [];
-        if ($result['success']) {
+        if (isset($result['success']) && $result['success']) {
             foreach ($result['results'] as $bundle) {
                 array_push($list, [
                     'id' => $bundle['productId'],
