@@ -39,11 +39,13 @@ class API
      * @param array $extra_headers
      * @return bool|string
      */
-    private function engine($end_point, $data, $extra_headers = null) {
+    private function engine($end_point, $data = null, $extra_headers = null) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "{$this->base_url}/{$end_point}");
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setOpt($ch, CURLOPT_POSTFIELDS, $data);
+        if ($data != null) {
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setOpt($ch, CURLOPT_POSTFIELDS, $data);
+        }
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         if ($extra_headers) {
