@@ -9,6 +9,10 @@ class ExampleServiceScript
     private function __construct() { }
 
     public static function copyMe(&$tracker, $input, $target, $option, $has_accounts = true, $available = [false, true, true, true, true]) {
+        $secret_key = 'your_secret_key';
+        $client_key = 'your_client_key';
+        $client_id = 'your_client_id';
+
         switch ($option) {
             case "KORBA_MENU":
                 $tracker->authorization = 'non-registered';
@@ -139,7 +143,7 @@ class ExampleServiceScript
 
             case "KORBA_DATA_TYPE":
                 if ($tracker->type == 'glo') {
-                    $xchange = new XChangeV1('fd2f9df0d6876e88c6e81f7a4748c90c207ebb497bd4822ef689628b0045743b', '457b43b4e30a0be7c94fb0544ba3e10d3b900fff', '9');
+                    $xchange = new XChangeV1($secret_key, $client_key, $client_id);
                     $data_types = $xchange->glo_types();
                     return $data_types['success'] ? new DataType($tracker->type, $data_types['results'], ['id', 'name']) : new Error('Could not retrieve glo data type list');
                 }
@@ -147,7 +151,7 @@ class ExampleServiceScript
 
             case "KORBA_DATA_LIST":
                 $payload = json_decode($tracker->payload, true);
-                $xchange = new XChangeV1('fd2f9df0d6876e88c6e81f7a4748c90c207ebb497bd4822ef689628b0045743b', '457b43b4e30a0be7c94fb0544ba3e10d3b900fff', '9');
+                $xchange = new XChangeV1($secret_key, $client_key, $client_id);
                 if ($tracker->type == 'airteltigo') {
                     $data_list = $xchange->airteltigo_bundles();
                 } else if ($tracker->type == 'busy') {
@@ -176,7 +180,7 @@ class ExampleServiceScript
 
             case "KORBA_DATA_CONFIRMATION":
                 $payload = json_decode($tracker->payload, true);
-                $xchange = new XChangeV1('fd2f9df0d6876e88c6e81f7a4748c90c207ebb497bd4822ef689628b0045743b', '457b43b4e30a0be7c94fb0544ba3e10d3b900fff', '9');
+                $xchange = new XChangeV1($secret_key, $client_key, $client_id);
                 if ($tracker->type == 'airteltigo') {
                     $data_list = $xchange->airteltigo_bundles();
                 } else if ($tracker->type == 'busy') {
@@ -277,7 +281,7 @@ class ExampleServiceScript
                 }
 
             case "KORBA_TV_CONFIRM":
-                $xchange = new XChangeV1('fd2f9df0d6876e88c6e81f7a4748c90c207ebb497bd4822ef689628b0045743b', '457b43b4e30a0be7c94fb0544ba3e10d3b900fff', '9');
+                $xchange = new XChangeV1($secret_key, $client_key, $client_id);
                 $tv = $xchange->etransact_validate($input, strtoupper($tracker->type), $tracker->transaction_id);
                 $next = 'korba_tv_amount';
                 if (!$tv['error_code']) {
@@ -370,7 +374,7 @@ class ExampleServiceScript
                 return new AccountNumber('korba_util_confirm');
 
             case "KORBA_UTIL_CONFIRM":
-                $xchange = new XChangeV1('fd2f9df0d6876e88c6e81f7a4748c90c207ebb497bd4822ef689628b0045743b', '457b43b4e30a0be7c94fb0544ba3e10d3b900fff', '9');
+                $xchange = new XChangeV1($secret_key, $client_key, $client_id);
                 $next = 'korba_util_amount';
                 if ($tracker->type == 'gwcl') {
                     $payload = json_decode($tracker->payload, true);
