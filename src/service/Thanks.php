@@ -14,7 +14,8 @@ class Thanks extends View
             if ($network == "MTN") {
                 $content = "Please wait for prompt to authorize";
             } else if ($network = "VOD") {
-                $content = "Transaction is being processed, you will receive an SMS soon";
+                $content = "Please wait for prompt to authorize";
+//                $content = "Transaction is being processed, you will receive an SMS soon";
             } else if ($network == "AIR") {
                 $content = "Please wait for prompt to authorize";
             } else if ($network == "TIG") {
