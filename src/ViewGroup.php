@@ -3,14 +3,19 @@
 
 namespace Korba;
 
-
+/**
+ * Class ViewGroup.
+ * A class to group view and return one given the index
+ * @package Korba
+ */
 class ViewGroup
 {
-    /** @var View */
+    /** @var View $views Array of views to group */
     private $views;
 
     /**
      * ViewGroup constructor.
+     * Accepts and stores views
      * @param View[] $views
      */
     public function __construct($views)
@@ -19,6 +24,8 @@ class ViewGroup
     }
 
     /**
+     * ViewGroup public function getView.
+     * Return the view for a given index
      * @param int $page
      * @return View
      */

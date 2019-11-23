@@ -2,11 +2,22 @@
 
 namespace Korba;
 
+/**
+ * Class Generator.
+ * A class used to generate the database parameter for an Eloquent database model and Migration class.
+ * @package Korba
+ */
 class Generator
 {
+    /**
+     * Generator private constructor.
+     * This construct prevents creating an instance of the class since it has only static methods.
+     */
     private function __construct() { }
 
     /**
+     * Generator public static function getModelDefaultParameters.
+     * This method is used to create the attributes for Eloquent model.
      * @return array
      */
     public static function getModelDefaultParameters() {
@@ -28,7 +39,9 @@ class Generator
     }
 
     /**
-     * @param $table
+     * Generator public static function createTableDefaultParameters.
+     * This method is used to create the table fields for the Migration class.
+     * @param mixed $table The Migration class Schema table
      */
     public static function createTableDefaultParameters(&$table) {
         $table->string(Param::SESSION_ID)->unique();

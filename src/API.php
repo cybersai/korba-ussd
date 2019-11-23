@@ -3,24 +3,31 @@
 
 namespace Korba;
 
-
+/**
+ * Class API.
+ * A class to help quickly make request to api endpoints.
+ * Only Content-Type _application/json_ is supported.
+ * And methods currently supported are *GET* and *POST*.
+ * @package Korba
+ */
 class API
 {
-    /** @var string */
+    /** @var string The base url of the api request endpoint. */
     private $base_url;
-    /** @var array */
+    /** @var array The headers that will be appended to each request. */
     private $headers;
-    /** @var string  */
+    /** @var string|null The proxy url to be used request.  */
     private $proxy_url;
-    /** @var string */
+    /** @var string|null The proxy authentication in the form basic auth. */
     private $proxy_auth;
 
 
     /**
      * API constructor.
-     * @param string $base_url
-     * @param array $headers
-     * @param null|string $proxy
+     * It used to create a new instance of the API Class.
+     * @param string $base_url Base url of the api endpoint.
+     * @param array $headers Headers to include in each api request.
+     * @param null|string $proxy Proxy url to parse into the various components.
      */
     public function __construct($base_url, $headers, $proxy = null)
     {
@@ -34,10 +41,12 @@ class API
     }
 
     /**
-     * @param string $end_point
-     * @param string $data
-     * @param array $extra_headers
-     * @return bool|string
+     * API private function engine.
+     * A function used by the API class to actually make a curl request to the intended api endpoint.
+     * @param string $end_point Endpoint to be used in addition to the base_url to construct full url path.
+     * @param string $data JsonEncoded string of the intended request data to send as the request body.
+     * @param array $extra_headers Any Extra headers that needs to be added to specific request.
+     * @return bool|string The result return after try to or connecting to the api endpoint.
      */
     private function engine($end_point, $data = null, $extra_headers = null) {
         $ch = curl_init();
@@ -65,10 +74,13 @@ class API
     }
 
     /**
-     * @param string $endpoint
-     * @param string|array $data
-     * @param array $extra_headers
-     * @return mixed
+     * API protected function call.
+     * A function used to make request to api endpoint. It clean the input data to a form suitable usable by the class
+     * @uses \Korba\API::engine to make the actual request
+     * @param string $endpoint Endpoint to be used in addition to the base_url to construct full url path.
+     * @param string|array $data JsonEncoded string of the intended request data to send as the request body.
+     * @param array $extra_headers The result return after try to or connecting to the api endpoint.
+     * @return bool|string
      */
     protected function call($endpoint, $data, $extra_headers = null) {
         $res = (gettype($data) == 'array') ? $this->engine($endpoint, json_encode($data), $extra_headers) : $this->engine($endpoint, $data, $extra_headers);

@@ -3,37 +3,39 @@
 namespace Korba;
 
 /**
- * @todo
- * Update Docs and Readme
+ * Class View.
+ * Class to help easy generate ussd menus
+ * @package Korba
  */
 
 class View {
-    /** @var string|string[] */
+    /** @var string|string[] $content Content of the ussd menu or the starting */
     private $content;
-    /** @var string|string[] */
+    /** @var string|string[] $next Link to the next menu tag */
     private $next;
-    /** @var integer */
+    /** @var integer $page Current page number of menu */
     private $page;
-    /** @var integer */
+    /** @var integer $number_per_page Total number of pages of the menu */
     private $number_per_page;
-    /** @var object[]|string[] */
+    /** @var object[]|string[] $iterable_list List of object to put on page */
     private $iterable_list;
-    /** @var string[]|object[] */
+    /** @var string[]|object[] $iterator index and parameter of the iterable_list to display */
     private $iterator;
-    /** @var string|string[] */
+    /** @var string|string[] $end Content to append to menu's ending */
     private $end;
 
-    /** @var null|string */
+    /** @var null|string $processNext Key to show if there is next page */
     private static $processNext = null;
-    /** @var null|string */
+    /** @var null|string $processBack Key to show if there is back page */
     private static $processBack = null;
-    /** @var null|string */
+    /** @var null|string $processPrevious Key to show if there is a previous page */
     private static $processPrevious = null;
-    /** @var null|string */
+    /** @var null|string $processBeginning Key to show if there is beginning page */
     private static $processBeginning = null;
 
     /**
      * View constructor.
+     * It used to create a new instance of the View Class.
      * @param string|string[] $content
      * @param string|string[] $next
      * @param integer $page
@@ -177,6 +179,8 @@ class View {
     }
 
     /**
+     * View public function parseToString.
+     * It compiles the menus to String format possible to display on phone
      * @return string
      */
     public function parseToString()
@@ -185,6 +189,8 @@ class View {
     }
 
     /**
+     * View public function makeList
+     * It generates the list for a particular page
      * @return string
      */
     private function makeList()
@@ -220,6 +226,8 @@ class View {
     }
 
     /**
+     * View public static function arrayToList
+     * It converts a given array to list in string format possible to display on phone
      * @param integer $page
      * @param integer $number_per_page
      * @param string[]|array[] $array

@@ -2,22 +2,32 @@
 
 namespace Korba;
 
+/**
+ * Class Util
+ * A class with function and constant to help easily create USSD.
+ * The USSD provider is TxtGhana and the consumer is Korba
+ * @see https://www.txtghana.com TxtGhana Website
+ * @see https://www.korbaweb.com Korba Website
+ * @package Korba
+ */
 final class Util
 {
     /**
-     * Prevent creating an object
-     *  from this class
+     * Util constructor.
+     *  This construct prevents creating an instance of the class since it has only static methods and constants.
      */
     private function __construct(){ }
 
-    /** @var int */
+    /** @var int constant 17 */
     const TERMINATION_CODE = 17;
 
-    /** @var int  */
+    /** @var int constant 2 */
     const CONTINUE_CODE = 2;
 
     /**
-     * @param string $code
+     * Util public static function codeToNetwork.
+     * It converts TxtGh network code to Korba network code
+     * @param string $code TxtGhana Code
      * @return string|null
      */
     public static function codeToNetwork($code) {
@@ -35,6 +45,8 @@ final class Util
     }
 
     /**
+     * Util public static function random.
+     * It generates random ids
      * @return string
      */
     public static function random() {
@@ -42,8 +54,10 @@ final class Util
     }
 
     /**
-     * @param string $int_number
-     * @return string|string[]|null
+     * Util public static function numberGHFormat.
+     * It convert phone numbers to Ghana Phone Number Format
+     * @param string $int_number Number to convert
+     * @return string
      */
     public static function numberGHFormat($int_number) {
         if (preg_match('/^\+233/', $int_number)) {
@@ -53,8 +67,10 @@ final class Util
     }
 
     /**
-     * @param string $gh_number
-     * @return string|string[]|null
+     * Util public static function numberIntFormat.
+     * It convert phone numbers to the Internation Number Format
+     * @param string $gh_number Number to convert
+     * @return string
      */
     public static function numberIntFormat($gh_number) {
         if (preg_match('/^0/', $gh_number)) {
@@ -64,8 +80,10 @@ final class Util
     }
 
     /**
-     * @param string $number
-     * @return string|string[]|null
+     * Util public static function number233Format.
+     * It convert phone numbers to the 233 Number Format
+     * @param string $number Number to convert
+     * @return string
      */
     public static function number233Format($number) {
         if (preg_match('/^0/', $number)) {
@@ -75,6 +93,8 @@ final class Util
     }
 
     /**
+     * Util public static function processBack.
+     * It allows for ussd to move to previous menu
      * @param string $key
      * @param string $value
      * @param array[] $history
@@ -96,6 +116,8 @@ final class Util
     }
 
     /**
+     * Util public static function processNext.
+     * It allows ussd to move to next page on a menu
      * @param string $key
      * @param string $value
      * @param string $target
@@ -115,6 +137,8 @@ final class Util
     }
 
     /**
+     * Util public static function processPrevious.
+     * It allows ussd to move to previous page on a menu
      * @param string $key
      * @param string $value
      * @param string $target
@@ -134,6 +158,8 @@ final class Util
     }
 
     /**
+     * Util public static function processReset.
+     * It allows the index of pages of menus to be reset after navigating it
      * @param string[] $keys
      * @param string $value
      * @param integer $target
@@ -145,6 +171,8 @@ final class Util
     }
 
     /**
+     * Util public static function processBeginning.
+     * It allows ussd to move to first menu
      * @param string $key
      * @param string $value
      * @param array[] $history
@@ -161,6 +189,8 @@ final class Util
     }
 
     /**
+     * Util public static function verifyPhoneNumber.
+     * It verifies if a number is correct
      * @param string $number
      * @return boolean
      */
@@ -169,6 +199,8 @@ final class Util
     }
 
     /**
+     * Util public static function verifyNumberLength.
+     * It verifies if a number is exactly a particular length
      * @param string $number
      * @return boolean
      */
@@ -177,6 +209,8 @@ final class Util
     }
 
     /**
+     * Util public static function verifyWholeNumber.
+     * It verifies if a number is a positive integer
      * @param string $number
      * @return boolean
      */
@@ -185,6 +219,8 @@ final class Util
     }
 
     /**
+     * Util public static function verifyAmount.
+     * It verifies if amount if a correct value
      * @param string $amount
      * @return boolean
      */
@@ -193,6 +229,8 @@ final class Util
     }
 
     /**
+     * Util public static function verifyNumber.
+     * Verifies if number is a single digit number
      * @param string $number
      * @return boolean
      */
@@ -201,6 +239,8 @@ final class Util
     }
 
     /**
+     * Util public static function requestToHashedMapArray.
+     * It convert request to an array that can be stored in a database
      * @param $request
      * @param View $response
      * @param string $option
@@ -224,6 +264,8 @@ final class Util
     }
 
     /**
+     * Util public static function isInitialRequest.
+     * Check if request in an initial request
      * @param $request
      * @return bool
      */
@@ -232,6 +274,8 @@ final class Util
     }
 
     /**
+     * Util public static function isContinuingRequest.
+     * Check if request indicates continuity
      * @param $request
      * @return bool
      */
@@ -240,6 +284,8 @@ final class Util
     }
 
     /**
+     * Util public static function getRequestSessionId.
+     * Returns the session id in the request
      * @param $request
      * @return string
      */
@@ -248,6 +294,8 @@ final class Util
     }
 
     /**
+     * Util public static function parseHistoryToArray.
+     * Convert History in database back to php array
      * @param string $history
      * @return array
      */
@@ -256,6 +304,8 @@ final class Util
     }
 
     /**
+     * Util public static function parseResponseToArray.
+     * Converts request to array which can be sent back to operator
      * @param View $response
      * @param integer $code
      * @return array
@@ -268,6 +318,8 @@ final class Util
     }
 
     /**
+     * Util public static function appendHistory.
+     * Adds a new entry to history
      * @param array $history
      * @param string $input
      * @param string $option
@@ -281,6 +333,8 @@ final class Util
     }
 
     /**
+     * Util public static function reverse.
+     * Move ussd back to point in the past
      * @param string $key
      * @param string $value
      * @param array[] $history
@@ -304,10 +358,11 @@ final class Util
     }
 
     /**
+     * Util public static function redirect.
+     * Redirect ussd request from one menu to the other
      * @param string $key
      * @param string $value
      * @param string $new_value
-     * @param array[] $history
      * @param string $option
      * @param string $from
      * @param string $to
