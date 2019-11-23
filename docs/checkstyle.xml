@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<checkstyle version="1.3.0">
+  <file name="Param.php"/>
+  <file name="Generator.php"/>
+  <file name="SMS.php"/>
+  <file name="Util.php"/>
+  <file name="ViewGroup.php"/>
+  <file name="API.php"/>
+  <file name="View.php"/>
+</checkstyle>

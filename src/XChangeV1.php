@@ -1,10 +1,16 @@
 <?php
 
-
+/**
+ * Class XChangeV1 at src/XChangeV1.php.
+ * File containing XChangeV1 class
+ * @api
+ * @author Isaac Adzah Sai <isaacsai030@gmail.com>
+ * @version 2.5.2
+ */
 namespace Korba;
 
 /**
- * Class XChangeV1
+ * Class XChangeV1 makes interruption with exchange easier.
  * @todo Write the Docs
  * @package Korba
  */

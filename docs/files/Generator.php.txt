@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * Class Generator at src/Generator.php.
+ * File containing Generator class
+ * @api
+ * @author Isaac Adzah Sai <isaacsai030@gmail.com>
+ * @version 2.5.2
+ */
+namespace Korba;
+
+/**
+ * Class Generator generate Model and Table values.
+ * A class used to generate the database parameter for an Eloquent database model and Migration class.
+ * @package Korba
+ */
+class Generator
+{
+    /**
+     * Generator private constructor.
+     * This construct prevents creating an instance of the class since it has only static methods.
+     */
+    private function __construct() { }
+
+    /**
+     * Generator public static function getModelDefaultParameters.
+     * This method is used to create the attributes for Eloquent model.
+     * @return array
+     */
+    public static function getModelDefaultParameters() {
+        return [
+            Param::SESSION_ID,
+            Param::PHONE_NUMBER,
+            Param::NETWORK,
+            Param::OPTION,
+            Param::TARGET,
+            Param::HISTORY,
+            Param::PAYLOAD,
+            Param::ACCOUNT_NUMBER,
+            Param::AMOUNT,
+            Param::PURPOSE,
+            Param::AUTHORIZATION,
+            Param::TYPE,
+            Param::TRANSACTION_ID
+        ];
+    }
+
+    /**
+     * Generator public static function createTableDefaultParameters.
+     * This method is used to create the table fields for the Migration class.
+     * @param mixed $table The Migration class Schema table
+     */
+    public static function createTableDefaultParameters(&$table) {
+        $table->string(Param::SESSION_ID)->unique();
+        $table->string(Param::PHONE_NUMBER);
+        $table->string(Param::NETWORK);
+        $table->integer(Param::TARGET)->unsigned()->default(1);
+        $table->string(Param::OPTION);
+        $table->text(Param::HISTORY)->nullable();
+        $table->text(Param::PAYLOAD)->nullable();
+        $table->string(Param::ACCOUNT_NUMBER)->nullable();
+        $table->string(Param::AMOUNT)->nullable();
+        $table->string(Param::PURPOSE)->nullable();
+        $table->string(Param::AUTHORIZATION)->nullable();
+        $table->string(Param::TRANSACTION_ID)->unique();
+        $table->string(Param::TYPE)->nullable();
+    }
+}
+

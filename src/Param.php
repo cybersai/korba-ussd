@@ -1,9 +1,16 @@
 <?php
 
+/**
+ * Class Param at src/Param.php.
+ * File containing Param class
+ * @api
+ * @author Isaac Adzah Sai <isaacsai030@gmail.com>
+ * @version 2.5.2
+ */
 namespace Korba;
 
 /**
- * Class Param.
+ * Class Param maintains uniformity between classes.
  * A class that holds constant params to be used by other class to ensure uniformity.
  * @package Korba
  */

@@ -1,9 +1,16 @@
 <?php
 
+/**
+ * Class Util at src/Util.php.
+ * File containing Util class
+ * @api
+ * @author Isaac Adzah Sai <isaacsai030@gmail.com>
+ * @version 2.5.2
+ */
 namespace Korba;
 
 /**
- * Class Util
+ * Class Util is a helper class.
  * A class with function and constant to help easily create USSD.
  * The USSD provider is TxtGhana and the consumer is Korba
  * @see https://www.txtghana.com TxtGhana Website
@@ -201,7 +208,8 @@ final class Util
     /**
      * Util public static function verifyNumberLength.
      * It verifies if a number is exactly a particular length
-     * @param string $number
+     * @param string $number Number String to verify
+     * @param int $length Length to use for validation
      * @return boolean
      */
     public static function verifyNumberLength($number, $length = 10) {

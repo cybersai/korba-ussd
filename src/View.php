@@ -1,9 +1,16 @@
 <?php
 
+/**
+ * Class View at src/View.php.
+ * File containing View class
+ * @api
+ * @author Isaac Adzah Sai <isaacsai030@gmail.com>
+ * @version 2.5.2
+ */
 namespace Korba;
 
 /**
- * Class View.
+ * Class View helps child classes quickly create ussd menus.
  * Class to help easy generate ussd menus
  * @package Korba
  */
@@ -19,9 +26,9 @@ class View {
     private $number_per_page;
     /** @var object[]|string[] $iterable_list List of object to put on page */
     private $iterable_list;
-    /** @var string[]|object[] $iterator index and parameter of the iterable_list to display */
+    /** @var string[]|object[]|null $iterator index and parameter of the iterable_list to display */
     private $iterator;
-    /** @var string|string[] $end Content to append to menu's ending */
+    /** @var string[]|null $end Content to append to menu's ending */
     private $end;
 
     /** @var null|string $processNext Key to show if there is next page */
@@ -40,9 +47,9 @@ class View {
      * @param string|string[] $next
      * @param integer $page
      * @param integer $number_per_page
-     * @param object[]|string[] $iterable_list
-     * @param string[] $iterator
-     * @param string|string[] $end
+     * @param object[]|string[]|null $iterable_list
+     * @param string[]|null $iterator
+     * @param string|string[]|null $end
      */
     public function __construct($content , $next, $page = 1, $number_per_page = null, $iterable_list = null, $iterator = null, $end = null)
     {
@@ -56,6 +63,7 @@ class View {
     }
 
     /**
+     * View public function setContent.
      * @param string|string[] $content
      */
     public function setContent($content)
@@ -64,6 +72,7 @@ class View {
     }
 
     /**
+     * View public function setNext.
      * @param string|string[] $next
      */
     public function setNext($next)
@@ -72,6 +81,7 @@ class View {
     }
 
     /**
+     * View public function setPage.
      * @param int $page
      */
     public function setPage($page)
@@ -80,6 +90,7 @@ class View {
     }
 
     /**
+     * View public function setNumberPerPage.
      * @param int $number_per_page
      */
     public function setNumberPerPage($number_per_page)
@@ -88,6 +99,7 @@ class View {
     }
 
     /**
+     * View public function setIterableList.
      * @param object[]|string[] $iterable_list
      */
     public function setIterableList($iterable_list)
@@ -96,7 +108,8 @@ class View {
     }
 
     /**
-     * @param object[]|string[] $iterator
+     * View public function setIterator.
+     * @param string[]|null $iterator
      */
     public function setIterator($iterator)
     {
@@ -104,6 +117,7 @@ class View {
     }
 
     /**
+     * View public function setEnd.
      * @param string|string[] $end
      */
     public function setEnd($end)
@@ -114,6 +128,7 @@ class View {
 
 
     /**
+     * View public function getContent.
      * @return string
      */
     public function getContent()
@@ -125,6 +140,7 @@ class View {
     }
 
     /**
+     * View public function getNext.
      * @return string
      */
     public function getNext()
@@ -136,6 +152,7 @@ class View {
     }
 
     /**
+     * View public function getPage.
      * @return int
      */
     public function getPage()
@@ -144,6 +161,7 @@ class View {
     }
 
     /**
+     * View public function getNumberPerPage.
      * @return int
      */
     public function getNumberPerPage()
@@ -152,6 +170,7 @@ class View {
     }
 
     /**
+     * View public function getIterableList.
      * @return object[]|string[]
      */
     public function getIterableList()
@@ -160,6 +179,7 @@ class View {
     }
 
     /**
+     * View public function getIterator.
      * @return string[]
      */
     public function getIterator()
@@ -168,6 +188,7 @@ class View {
     }
 
     /**
+     * View public function getEnd.
      * @return string
      */
     public function getEnd()
@@ -262,6 +283,7 @@ class View {
     }
 
     /**
+     * View public static function setProcessNext.
      * @param string $key
      */
     public static function setProcessNext($key) {
@@ -269,6 +291,7 @@ class View {
     }
 
     /**
+     * View public static function setProcessBack.
      * @param string $key
      */
     public static function setProcessBack($key) {
@@ -276,6 +299,7 @@ class View {
     }
 
     /**
+     * View public static function setProcessPrevious.
      * @param string $key
      */
     public static function setProcessPrevious($key) {
@@ -283,6 +307,7 @@ class View {
     }
 
     /**
+     * View public static function setProcessBeginning.
      * @param string $key
      */
     public static function setProcessBeginning($key) {
@@ -290,6 +315,7 @@ class View {
     }
 
     /**
+     * View public static function getProcessNext.
      * @return null|string
      */
     public static function getProcessNext() {
@@ -297,6 +323,7 @@ class View {
     }
 
     /**
+     * View public static function getProcessBack.
      * @return null|string
      */
     public static function getProcessBack() {
@@ -304,6 +331,7 @@ class View {
     }
 
     /**
+     * View public static function getProcessPrevious.
      * @return null|string
      */
     public static function getProcessPrevious() {
@@ -311,6 +339,7 @@ class View {
     }
 
     /**
+     * View public static function getProcessBeginning,
      * @return null|string
      */
     public static function getProcessBeginning() {

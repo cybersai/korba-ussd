@@ -1,9 +1,16 @@
 <?php
 
+/**
+ * Class Generator at src/Generator.php.
+ * File containing Generator class
+ * @api
+ * @author Isaac Adzah Sai <isaacsai030@gmail.com>
+ * @version 2.5.2
+ */
 namespace Korba;
 
 /**
- * Class Generator.
+ * Class Generator generate Model and Table values.
  * A class used to generate the database parameter for an Eloquent database model and Migration class.
  * @package Korba
  */

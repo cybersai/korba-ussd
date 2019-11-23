@@ -1,10 +1,16 @@
 <?php
 
-
+/**
+ * Class SMS at src/SMS.php.
+ * File containing SMS class
+ * @api
+ * @author Isaac Adzah Sai <isaacsai030@gmail.com>
+ * @version 2.5.2
+ */
 namespace Korba;
 
 /**
- * Class SMS.
+ * Class SMS help send messages.
  * Class to make use of Info SMS API service to send sms messages. It extends Class API. {@inheritDoc}
  * @see http://infobip.com Infobip Website
  * @package Korba

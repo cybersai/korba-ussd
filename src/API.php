@@ -1,10 +1,16 @@
 <?php
 
-
+/**
+ * Class API at src/API.php.
+ * File containing API class
+ * @api
+ * @author Isaac Adzah Sai <isaacsai030@gmail.com>
+ * @version 2.5.2
+ */
 namespace Korba;
 
 /**
- * Class API.
+ * Class API helps access API quickly.
  * A class to help quickly make request to api endpoints.
  * Only Content-Type _application/json_ is supported.
  * And methods currently supported are *GET* and *POST*.
