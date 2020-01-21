@@ -186,6 +186,29 @@ final class XChangeV1 extends API
         return $result;
     }
 
+    public function surfline_updated_bundles($customer_number, $filter = null) {
+        $data = [
+            'customer_number' => $customer_number
+        ];
+        $result = $this->call('get_updated_surfline_bundles/', $data);
+        if (isset($result['success']) && $result['success'] && in_array($filter, array('AlwaysON', 'Unlimited', 'All Weather'))) {
+            $list = [];
+            foreach ($result['bundles'][$filter] as $bundle) {
+                array_push($list, [
+                    'id' => $bundle['bundle_id'],
+                    'description' => $bundle['description'],
+                    'price' => $bundle['price'],
+                    'validity' => $bundle['validity']
+                ]);
+            }
+            return [
+                'success' => true,
+                'bundles' => $list
+            ];
+        }
+        return $result;
+    }
+
     public function busy_purchase(
         $customer_number, $transaction_id, $bundle_id, $amount, $callback_url,
         $description = null, $payer_name = null, $extra_info = null) {
