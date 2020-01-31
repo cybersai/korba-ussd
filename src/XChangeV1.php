@@ -403,6 +403,28 @@ final class XChangeV1 extends API
         return $result;
     }
 
+    public function vodafone_bundles() {
+        $result = $this->call('get_vodafonedata_product_id/', []);
+        if (isset($result['success']) && $result['success']) {
+            $list = [];
+            foreach ($result['bundles'] as $bundle) {
+                array_push($list, [
+                    'id' => $bundle['bundle_size'],
+                    'price' => $bundle['amount'],
+                    'description' => " {$bundle['bundle_size']} - GHC {$bundle['amount']} - {$bundle['validity']}",
+                    'size' => $bundle['bundle_size'],
+                    'validity' => $bundle['validity'],
+                    'name' => $bundle['name']
+                ]);
+            }
+            return [
+                'success' => true,
+                'bundles' => $list
+            ];
+        }
+        return $result;
+    }
+
     public function airteltigo_purchase(
         $customer_number, $transaction_id, $product_id, $amount, $callback_url,
         $description = null, $payer_name = null, $extra_info = null) {
