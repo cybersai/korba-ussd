@@ -196,7 +196,7 @@ final class XChangeV1 extends API
             foreach ($result['bundles'][$filter] as $bundle) {
                 array_push($list, [
                     'id' => $bundle['bundle_id'],
-                    'description' => $bundle['description'],
+                    'description' => "{$bundle['description']} - GHC {$bundle['price']} - {$bundle['validity']}",
                     'price' => $bundle['price'],
                     'validity' => $bundle['validity']
                 ]);
