@@ -425,6 +425,23 @@ final class XChangeV1 extends API
         return $result;
     }
 
+    public function vodafone_purchase($customer_number, $transaction_id, $amount, $callback_url,
+                                      $description = null, $payer_name = null, $extra_info = null) {
+        $data = [
+            'customer_number' => $customer_number,
+            'transaction_id' => $transaction_id,
+            'amount' => $amount,
+            'callback_url' => $callback_url
+        ];
+        $opt_data = [
+            'description' => $description,
+            'payer_name' => $payer_name,
+            'extra_info' => $extra_info
+        ];
+        $this->add_optional_data($data, $opt_data);
+        return $this->call('vodafone_data_topup/', $data);
+    }
+
     public function airteltigo_purchase(
         $customer_number, $transaction_id, $product_id, $amount, $callback_url,
         $description = null, $payer_name = null, $extra_info = null) {
