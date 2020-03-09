@@ -14,7 +14,7 @@ namespace Korba;
  * @todo Write the Docs
  * @package Korba
  */
-final class XChangeV1 extends API
+class XChangeV1 extends API
 {
 
     private $secret_key;
