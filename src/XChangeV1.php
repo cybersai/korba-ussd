@@ -17,12 +17,12 @@ namespace Korba;
 class XChangeV1 extends API
 {
 
-    private $secret_key;
-    private $client_key;
-    private $client_id;
-    private static $live_url = 'https://xchange.korbaweb.com/api/v1.0';
-    private static $test_url = 'https://korbaxchange.herokuapp.com/api/v1.0';
-    private static $aws_url = 'http://internal-awseb-e-e-awsebloa-kxexw3t2bgt7-1521297916.eu-west-1.elb.amazonaws.com/api/v1.0';
+    protected $secret_key;
+    protected $client_key;
+    protected $client_id;
+    protected static $live_url = 'https://xchange.korbaweb.com/api/v1.0';
+    protected static $test_url = 'https://korbaxchange.herokuapp.com/api/v1.0';
+    protected static $aws_url = 'http://internal-awseb-e-e-awsebloa-kxexw3t2bgt7-1521297916.eu-west-1.elb.amazonaws.com/api/v1.0';
 
     public function __construct($secret_key, $client_key, $client_id, $mode  = 'test', $proxy = null)
     {
