@@ -38,6 +38,7 @@ class MethodAssembler extends AssemblerAbstract
         $descriptor = new MethodDescriptor($data->getName());
         $descriptor->setDescription($data->getDescription());
         $descriptor->setMethodName($data->getMethodName());
+        $descriptor->setStatic($data->isStatic());
 
         $response = new ReturnDescriptor('return');
         $response->setTypes($this->builder->buildDescriptor(new Collection($data->getTypes())));
@@ -70,12 +71,11 @@ class MethodAssembler extends AssemblerAbstract
                 continue;
             }
 
-            if (!$argumentType && $part[0] != '$') {
+            // Type should not be assigned after name
+            if (!$argumentName && !$argumentType && $part{0} != '$') {
                 $argumentType = $part;
-            } elseif (!$argumentName) {
+            } elseif (!$argumentName && $part{0} == '$') {
                 $argumentName = $part;
-            } elseif ($argumentName && !$argumentType) {
-                $argumentType = $part;
             } elseif ($part == '=') {
                 $argumentDefault = null;
             } elseif ($argumentDefault === null) {

@@ -4,7 +4,7 @@
             <a id="constant_{{ constant.name }}" name="constant_{{ constant.name }}" class="anchor"></a>
             <article id="constant_{{ constant.name }}" class="constant">
                 <h3 class="{% if constant.deprecated %}deprecated{% endif %}">{{ constant.name }}</h3>
-                <pre class="signature">{{ constant.name }}</pre>
+                <pre class="signature">{{ constant.name }} = {{ constant.value }}{% if not (constant.types is empty) %} : {{ constant.types|join('|') }}{% endif %}</pre>
                 <p><em>{{ constant.summary }}</em></p>
                 {{ constant.description|markdown|raw }}
             </article>
@@ -34,12 +34,12 @@
                         <dd><a href="{{ tag.reference|route('url') ?: tag.link }}"><span class="namespace-wrapper">{{ tag.description ?: tag.reference }}</span></a></dd>
                     {% endfor %}
                 {% endfor %}
-                {% for tagName,tags in method.tags if tagName in ['uses'] %}
+                {% for tagName,tags in constant.tags if tagName in ['uses'] %}
                     {% if loop.first %}
                         <dt>Uses</dt>
                     {% endif %}
                     {% for tag in tags %}
-                        <dd>{{ tag.reference|route|raw }}</dd>
+                        <dd><a href="{{ tag.reference|route('url') }}"><span class="namespace-wrapper">{{ tag.description ?: tag.reference }}</span></a></dd>
                     {% endfor %}
                 {% endfor %}
             </dl>
@@ -52,6 +52,7 @@
                         </th>
                         <td>
                             {% for tag in tags %}
+                                {% if tag.version %}{{ tag.version }}{% endif %}
                                 {{ tag.description|markdown|raw }}
                             {% endfor %}
                         </td>

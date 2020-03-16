@@ -57,11 +57,11 @@ class XChangeV1 extends API
         return ["Authorization: HMAC {$this->client_key}:{$hmac_signature}"];
     }
 
-    protected function call($endpoint, $data, $extra_headers = null)
+    protected function call($endpoint, $data, $extra_headers = null, $timeout = 20, $connection_timeout = 5)
     {
         $data = array_merge($data, ['client_id' => $this->client_id]);
         $extra_headers = ($extra_headers) ? array_merge($extra_headers, $this->getHMACHeader($data)) : $this->getHMACHeader($data);
-        return parent::call($endpoint, $data, $extra_headers);
+        return parent::call($endpoint, $data, $extra_headers, $timeout, $connection_timeout);
     }
 
     protected function add_optional_data(&$data, $optional_data) {

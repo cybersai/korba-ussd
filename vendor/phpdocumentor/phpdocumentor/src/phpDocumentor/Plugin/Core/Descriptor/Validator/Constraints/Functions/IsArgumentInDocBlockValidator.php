@@ -30,11 +30,11 @@ class IsArgumentInDocBlockValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        if ($value instanceof ValidationValueObject && count($value->argument) > 0) {
+        if ($value instanceof ValidationValueObject) {
             $argument = $value->argument;
             /* @var $params \phpDocumentor\Descriptor\Collection */
             $params   = $value->parameters;
-            $index    = (int) $value->index;
+            $index    = (int) $value->index == '' ? 0 : $value->index;
 
             if ($params && $params->offsetExists($index)) {
                 return null;

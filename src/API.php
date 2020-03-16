@@ -54,7 +54,7 @@ class API
      * @param array $extra_headers Any Extra headers that needs to be added to specific request.
      * @return bool|string The result return after try to or connecting to the api endpoint.
      */
-    private function engine($end_point, $data = null, $extra_headers = null) {
+    private function engine($end_point, $data = null, $extra_headers = null, $timeout = 0, $connection_timeout = 300) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "{$this->base_url}/{$end_point}");
         if ($data != null) {
@@ -63,6 +63,8 @@ class API
         }
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $connection_timeout);
         if ($extra_headers) {
             curl_setopt($ch, CURLOPT_HTTPHEADER, array_merge($this->headers, $extra_headers));
         } else {
@@ -88,8 +90,8 @@ class API
      * @param array $extra_headers The result return after try to or connecting to the api endpoint.
      * @return bool|string
      */
-    protected function call($endpoint, $data, $extra_headers = null) {
-        $res = (gettype($data) == 'array') ? $this->engine($endpoint, json_encode($data), $extra_headers) : $this->engine($endpoint, $data, $extra_headers);
+    protected function call($endpoint, $data, $extra_headers = null, $timeout = 0, $connection_timeout = 300) {
+        $res = (gettype($data) == 'array') ? $this->engine($endpoint, json_encode($data), $extra_headers, $timeout, $connection_timeout) : $this->engine($endpoint, $data, $extra_headers, $timeout, $connection_timeout);
         $result = json_decode($res, true);
         return $result;
     }
