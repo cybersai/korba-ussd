@@ -403,7 +403,7 @@ class XChangeV1 extends API
         return $result;
     }
 
-    public function vodafone_bundles() {
+    public function vodafone_bundles($filter = null) {
         $result = $this->call('get_vodafonedata_product_id/', []);
         if (isset($result['success']) && $result['success']) {
             $list = [];
@@ -417,6 +417,21 @@ class XChangeV1 extends API
                     'name' => $bundle['name']
                 ]);
             }
+
+            if ($filter != null && in_array($filter, ['daily', 'weekly', 'monthly'])) {
+                $list = array_filter($list, function ($value) use ($filter) {
+                    $validity = explode(' ', $value['validity']);
+                    if ($filter == 'daily') {
+                        return intval($validity[0]) >= 1 && intval($validity[0]) < 7;
+                    } else if ($filter == 'weekly') {
+                        return intval($validity[0]) >= 7 && intval($validity[0]) < 30;
+                    } else {
+                        return intval($validity[0]) >= 30;
+                    } 
+                });
+                $list = array_values($list);
+            }
+
             return [
                 'success' => true,
                 'bundles' => $list
@@ -451,7 +466,7 @@ class XChangeV1 extends API
         return $this->call('airteltigo_data_topup/', $data);
     }
 
-    public function airteltigo_bundles() {
+    public function airteltigo_bundles($filter = null) {
         $result = $this->call('get_airteltigodata_product_id/', []);
         $list = [];
         if (isset($result['success']) && $result['success']) {
@@ -459,15 +474,30 @@ class XChangeV1 extends API
                 array_push($list, [
                     'id' => $bundle['product_id'],
                     'price' => $bundle['amount'],
-                    'description' => "{$bundle['name']} @ {$bundle['amount']}"
+                    'description' => $bundle['category'] == 'XTRA_UNLIMITED_CALLS' ? 
+                        "{$bundle['name']} @ GHC {$bundle['amount']} - {$bundle['validity']}" : 
+                        "{$bundle['name']} + {$bundle['name']} @ GHC {$bundle['amount']} - {$bundle['validity']}",
+                    'size' => $bundle['name'],
+                    'category' => $bundle['category'],
                 ]);
             }
+            $list = $this->airteltigo_filter($list, $filter);
             return [
                 'success' => true,
                 'bundles' => $list
             ];
         }
         return $result;
+    }
+
+    private function airteltigo_filter($bundles, $filter) {
+        if ($filter != null && in_array($filter, ['BIGTIME', 'SIKA_KOKOOR', 'XTRA_UNLIMITED_CALLS'])) {
+            $result = array_filter($bundles, function ($product) use ($filter) {
+                return $product['category'] == $filter;
+            });
+            return array_values($result);
+        }
+        return $bundles;
     }
 
     public function glo_types() {
