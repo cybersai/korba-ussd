@@ -193,13 +193,15 @@ class XChangeV1 extends API
         $result = $this->call('get_updated_surfline_bundles/', $data);
         if (isset($result['success']) && $result['success'] && in_array($filter, array('AlwaysON', 'Unlimited', 'All Weather'))) {
             $list = [];
-            foreach ($result['bundles'][$filter] as $bundle) {
-                array_push($list, [
-                    'id' => $bundle['bundle_id'],
-                    'description' => "{$bundle['description']} - GHC {$bundle['price']} - {$bundle['validity']}",
-                    'price' => $bundle['price'],
-                    'validity' => $bundle['validity']
-                ]);
+            if (isset($result['bundles'][$filter])) {
+                foreach ($result['bundles'][$filter] as $bundle) {
+                    array_push($list, [
+                        'id' => $bundle['bundle_id'],
+                        'description' => "{$bundle['description']} - GHC {$bundle['price']} - {$bundle['validity']}",
+                        'price' => $bundle['price'],
+                        'validity' => $bundle['validity']
+                    ]);
+                }
             }
             return [
                 'success' => true,

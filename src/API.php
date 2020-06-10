@@ -52,7 +52,7 @@ class API
      * @param string $end_point Endpoint to be used in addition to the base_url to construct full url path.
      * @param string $data JsonEncoded string of the intended request data to send as the request body.
      * @param array $extra_headers Any Extra headers that needs to be added to specific request.
-     * @return bool|string The result return after try to or connecting to the api endpoint.
+     * @return bool|string|array The result return after try to or connecting to the api endpoint.
      */
     private function engine($end_point, $data = null, $extra_headers = null, $timeout = 0, $connection_timeout = 300) {
         $ch = curl_init();
@@ -88,7 +88,7 @@ class API
      * @param string $endpoint Endpoint to be used in addition to the base_url to construct full url path.
      * @param string|array $data JsonEncoded string of the intended request data to send as the request body.
      * @param array $extra_headers The result return after try to or connecting to the api endpoint.
-     * @return bool|string
+     * @return bool|string|array
      */
     protected function call($endpoint, $data, $extra_headers = null, $timeout = 0, $connection_timeout = 300) {
         $res = (gettype($data) == 'array') ? $this->engine($endpoint, json_encode($data), $extra_headers, $timeout, $connection_timeout) : $this->engine($endpoint, $data, $extra_headers, $timeout, $connection_timeout);
