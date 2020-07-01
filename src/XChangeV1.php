@@ -21,7 +21,7 @@ class XChangeV1 extends API
     protected $client_key;
     protected $client_id;
     protected static $live_url = 'https://xchange.korbaweb.com/api/v1.0';
-    protected static $test_url = 'https://korbaxchange.herokuapp.com/api/v1.0';
+    protected static $test_url = 'https://korba-xchange.herokuapp.com/api/v1.0';
     protected static $aws_url = 'http://internal-awseb-e-e-awsebloa-kxexw3t2bgt7-1521297916.eu-west-1.elb.amazonaws.com/api/v1.0';
 
     public function __construct($secret_key, $client_key, $client_id, $mode  = 'test', $proxy = null)
@@ -163,6 +163,15 @@ class XChangeV1 extends API
         return $this->call('purchase_surfline_bundle/', $data);
     }
 
+    public function surfline_new_purchase(
+        $customer_number, $transaction_id, $bundle_id, $amount, $callback_url,
+        $description = null, $payer_name = null, $extra_info = null) {
+        $data = $this->internet_bundle_data(
+            $customer_number, $transaction_id, $bundle_id, $amount, $callback_url,
+            $description, $payer_name, $extra_info);
+        return $this->call('new_purchase_surfline/', $data);
+    }
+
     public function surfline_bundles($customer_number) {
         $data = [
             'customer_number' => $customer_number
@@ -191,6 +200,31 @@ class XChangeV1 extends API
             'customer_number' => $customer_number
         ];
         $result = $this->call('get_updated_surfline_bundles/', $data);
+        if (isset($result['success']) && $result['success'] && in_array($filter, array('AlwaysON', 'Unlimited', 'All Weather'))) {
+            $list = [];
+            if (isset($result['bundles'][$filter])) {
+                foreach ($result['bundles'][$filter] as $bundle) {
+                    array_push($list, [
+                        'id' => $bundle['bundle_id'],
+                        'description' => "{$bundle['description']} - GHC {$bundle['price']} - {$bundle['validity']}",
+                        'price' => $bundle['price'],
+                        'validity' => $bundle['validity']
+                    ]);
+                }
+            }
+            return [
+                'success' => true,
+                'bundles' => $list
+            ];
+        }
+        return $result;
+    }
+
+    public function surfline_final_bundles($customer_number, $filter = null) {
+        $data = [
+            'customer_number' => $customer_number
+        ];
+        $result = $this->call('get_final_surfline_bundles/', $data);
         if (isset($result['success']) && $result['success'] && in_array($filter, array('AlwaysON', 'Unlimited', 'All Weather'))) {
             $list = [];
             if (isset($result['bundles'][$filter])) {
@@ -549,6 +583,15 @@ class XChangeV1 extends API
             'transaction_id' => $transaction_id
         ];
         return $this->call('etransact_validate_user/', $data);
+    }
+
+    public function new_etransact_validate($customer_number, $bill_type, $transaction_id) {
+        $data = [
+            'customer_number' => $customer_number,
+            'bill_type' => $bill_type,
+            'transaction_id' => $transaction_id
+        ];
+        return $this->call('new_etransact_validate_user/', $data);
     }
 
     public function etransact_pay(

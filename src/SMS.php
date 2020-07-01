@@ -44,7 +44,7 @@ class SMS extends API
      * SMS public function send.
      * It is used to send SMS
      * @param string $text Body of the SMS
-     * @param string $to Number of the recipient
+     * @param string|array $to Number of the recipient
      * @param string|null $from Name of the send. if null will fallback to global_from
      * @return bool|string
      */
