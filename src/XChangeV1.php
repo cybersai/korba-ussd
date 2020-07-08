@@ -540,6 +540,10 @@ class XChangeV1 extends API
         return $this->call('glo_data_get_bundle_types/', []);
     }
 
+    public function new_glo_types() {
+        return $this->call('new_glo_data_get_bundle_types/', []);
+    }
+
     public function glo_bundles($bundle_type_id) {
         $data = ['bundle_type_id' => $bundle_type_id];
         $result = $this->call('glo_data_get_bundles/', $data);
@@ -561,7 +565,44 @@ class XChangeV1 extends API
         return $result;
     }
 
+    public function new_glo_bundles($bundle_type_id) {
+        $data = ['bundle_type_id' => $bundle_type_id];
+        $result = $this->call('new_glo_data_get_bundles/', $data);
+        $list = [];
+        if (isset($result['success']) && $result['success']) {
+            foreach ($result['results'] as $bundle) {
+                array_push($list, [
+                    'id' => $bundle['productId'],
+                    'description' => $bundle['name'],
+                    'price' => $bundle['price'],
+                    'volume' => $bundle['volume'],
+                    'validity' => $bundle['validity'],
+                ]);
+            }
+            return [
+                'success' => true,
+                'bundles' => $list
+            ];
+        }
+        return $result;
+    }
+
     public function glo_purchase($customer_number, $bundle_id, $amount, $transaction_id, $callback_url, $description = null) {
+        $data = [
+            'customer_number' => $customer_number,
+            'bundle_id' => $bundle_id,
+            'amount' => $amount,
+            'transaction_id' => $transaction_id,
+            'callback_url' => $callback_url
+        ];
+        $opt_data = ['description' => $description];
+        $this->add_optional_data($data, $opt_data);
+
+        $result = $this->call('glo_data_purchase/', $data);
+        return $result;
+    }
+
+    public function new_glo_purchase($customer_number, $bundle_id, $amount, $transaction_id, $callback_url, $description = null) {
         $data = [
             'customer_number' => $customer_number,
             'bundle_id' => $bundle_id,
