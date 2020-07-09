@@ -613,7 +613,7 @@ class XChangeV1 extends API
         $opt_data = ['description' => $description];
         $this->add_optional_data($data, $opt_data);
 
-        $result = $this->call('glo_data_purchase/', $data);
+        $result = $this->call('new_glo_data_purchase/', $data);
         return $result;
     }
 
