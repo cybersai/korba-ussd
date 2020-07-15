@@ -554,7 +554,8 @@ class XChangeV1 extends API
                     'id' => $bundle['productId'],
                     'description' => $bundle['name'],
                     'price' => $bundle['price'],
-                    'volume' => $bundle['volume']
+                    'volume' => $bundle['volume'],
+                    'validity' => $bundle['validity']
                 ]);
             }
             return [
