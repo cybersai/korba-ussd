@@ -254,6 +254,15 @@ class XChangeV1 extends API
         return $this->call('purchase_busy_bundle/', $data);
     }
 
+    public function busy_updated_purchase(
+        $customer_number, $transaction_id, $bundle_id, $amount, $callback_url,
+        $description = null, $payer_name = null, $extra_info = null) {
+        $data = $this->internet_bundle_data(
+            $customer_number, $transaction_id, $bundle_id, $amount, $callback_url,
+            $description, $payer_name, $extra_info);
+        return $this->call('updated_purchase_busy_bundle/', $data);
+    }
+
     public function busy_bundles($customer_number) {
         $data = [
             'customer_number' => $customer_number
@@ -278,6 +287,60 @@ class XChangeV1 extends API
             ];
         }
         return $result;
+    }
+
+    public function busy_updated_types($customer_number) {
+        $data = [
+            'customer_number' => $customer_number
+        ];
+        $result = $this->call('get_updated_busy_bundles/', $data);
+        if (isset($result['success']) && $result['success'] == true) {
+            $list = [];
+            foreach ($result['data']['list'] as $bundles) {
+                array_push($list, $bundles['OfferGroupName']);
+            }
+            $out = [
+                'success' => true,
+                'bundles' => $list
+            ];
+            return $out;
+        }
+        return $result;
+    }
+
+    public function busy_updated_bundles($customer_number, $number) {
+        $data = [
+            'customer_number' => $customer_number
+        ];
+        $result = $this->call('get_updated_busy_bundles/', $data);
+        if (isset($result['success']) && $result['success']) {
+            $list = [];
+            foreach ($result['data']['list'] as $key => $bundles) {
+                if ($key == $number - 1) {
+                    foreach ($bundles['Bundle']['BundleList'] as $item) {
+                        array_push($list, [
+                            'id' => $item['PricePlanCode'],
+                            'description' => " {$item['PricePlanName']} - GHC {$item['SalesPrice']}",
+                            'price' => $item['SalesPrice']
+                        ]);
+                    }
+                }
+            }
+            return [
+                'success' => true,
+                'bundles' => $list
+            ];
+        }
+        return $result;
+    }
+
+    public function busy_updated_balance($customer_number)
+    {
+        $data = [
+            'customer_number' => $customer_number
+        ];
+
+        return $this->call('new_check_busy_balance/', $data);
     }
 
     public function telesol_purchase(
