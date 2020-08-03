@@ -172,6 +172,15 @@ class XChangeV1 extends API
         return $this->call('new_purchase_surfline/', $data);
     }
 
+    public function surfline_final_purchase(
+        $customer_number, $transaction_id, $bundle_id, $amount, $callback_url,
+        $description = null, $payer_name = null, $extra_info = null) {
+        $data = $this->internet_bundle_data(
+            $customer_number, $transaction_id, $bundle_id, $amount, $callback_url,
+            $description, $payer_name, $extra_info);
+        return $this->call('purchase_final_surfline_bundle/', $data);
+    }
+
     public function surfline_bundles($customer_number) {
         $data = [
             'customer_number' => $customer_number
