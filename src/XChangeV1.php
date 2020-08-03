@@ -720,6 +720,27 @@ class XChangeV1 extends API
         return $this->call('etransact_pay_bill/', $data);
     }
 
+    public function new_etransact_pay(
+        $customer_number, $bill_type, $transaction_id, $sender_name, $address, $amount, $callback_url,
+        $description = null, $payer_name = null, $extra_info = null) {
+        $data = [
+            'customer_number' => $customer_number,
+            'bill_type' => $bill_type,
+            'transaction_id' => $transaction_id,
+            'sender_name' => $sender_name,
+            'address' => $address,
+            'amount' => $amount,
+            'callback_url' => $callback_url
+        ];
+        $opt_data = [
+            'description' => $description,
+            'payer_name' => $payer_name,
+            'extra_info' => $extra_info
+        ];
+        $this->add_optional_data($data, $opt_data);
+        return $this->call('new_etransact_pay_bill/', $data);
+    }
+
     public function transaction_status($transaction_id) {
         $data = [
             'transaction_id' => $transaction_id
