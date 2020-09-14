@@ -548,11 +548,63 @@ class XChangeV1 extends API
         return $result;
     }
 
+    public function new_vodafone_bundles($filter = null) {
+        $result = $this->call('new_get_vodafonedata_product_id/', []);
+
+        if (isset($result['success']) && $result['success']) {
+            $list = [];
+            foreach ($result['bundles'] as $bundle) {
+                array_push($list, [
+                    'id' => $bundle['bundle_id'],
+                    'price' => $bundle['amount'],
+                    'description' => " {$bundle['bundle_size']} - GHC {$bundle['amount']} - {$bundle['validity']}",
+                    'size' => $bundle['bundle_size'],
+                    'category' => $bundle['category'],
+                    'validity' => $bundle['validity'],
+                    'name' => $bundle['name']
+                ]);
+            }
+
+            if ($filter != null && in_array($filter, ['DAILY', 'WEEKLY', 'MONTHLY', 'NO EXPIRY', 'JUMBO'])) {
+                $list = array_filter($list, function ($value) use ($filter) {
+                    return $value['category'] == $filter;
+                });
+
+                $list = array_values($list);
+            }
+
+            return [
+                'success' => true,
+                'bundles' => $list
+            ];
+        }
+
+        return $result;
+    }
+
     public function vodafone_purchase($customer_number, $transaction_id, $amount, $callback_url,
                                       $description = null, $payer_name = null, $extra_info = null) {
         $data = [
             'customer_number' => $customer_number,
             'transaction_id' => $transaction_id,
+            'amount' => $amount,
+            'callback_url' => $callback_url
+        ];
+        $opt_data = [
+            'description' => $description,
+            'payer_name' => $payer_name,
+            'extra_info' => $extra_info
+        ];
+        $this->add_optional_data($data, $opt_data);
+        return $this->call('vodafone_data_topup/', $data);
+    }
+
+    public function new_vodafone_purchase($customer_number, $transaction_id, $bundle_id, $amount, $callback_url,
+                                      $description = null, $payer_name = null, $extra_info = null) {
+        $data = [
+            'customer_number' => $customer_number,
+            'transaction_id' => $transaction_id,
+            'bundle_id' => $bundle_id,
             'amount' => $amount,
             'callback_url' => $callback_url
         ];
