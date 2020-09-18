@@ -439,7 +439,8 @@ class XChangeV1 extends API
                 array_push($list, [
                     'id' => $bundle['product_id'],
                     'price' => $bundle['amount'],
-                    'description' => $bundle['name']
+                    'description' => $bundle['name'],
+                    'short_description' => preg_replace('/^MTN ((Daily)|(Weekly)|(Monthly)|(YouTube)) Data Bundle /', '', $bundle['name'],)
                 ]);
             }
             $list = $this->mtn_filter($list, $filter);
@@ -500,7 +501,7 @@ class XChangeV1 extends API
                 array_push($list, [
                     'id' => $bundle['product_id'],
                     'price' => $bundle['amount'],
-                    'description' => $bundle['name']
+                    'description' => "{$bundle['name']} - GHC " . preg_replace('/.00/', '', $bundle['amount'])
                 ]);
             }
             return [
@@ -614,7 +615,7 @@ class XChangeV1 extends API
             'extra_info' => $extra_info
         ];
         $this->add_optional_data($data, $opt_data);
-        return $this->call('vodafone_data_topup/', $data);
+        return $this->call('new_vodafone_data_topup/', $data);
     }
 
     public function airteltigo_purchase(
@@ -636,9 +637,10 @@ class XChangeV1 extends API
                     'price' => $bundle['amount'],
                     'description' => $bundle['category'] == 'XTRA_UNLIMITED_CALLS' ? 
                         "{$bundle['name']} @ GHC {$bundle['amount']} - {$bundle['validity']}" : 
-                        "{$bundle['name']} + {$bundle['name']} @ GHC {$bundle['amount']} - {$bundle['validity']}",
+                        "{$bundle['name']}+{$bundle['name']} @ GHC {$bundle['amount']} - {$bundle['validity']}",
                     'size' => $bundle['name'],
                     'category' => $bundle['category'],
+                    'validity' => $bundle['validity'],
                 ]);
             }
             $list = $this->airteltigo_filter($list, $filter);

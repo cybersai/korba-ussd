@@ -206,7 +206,23 @@ class View {
      */
     public function parseToString()
     {
-        return "{$this->getContent()}\n{$this->makeList()}\n{$this->getEnd()}";
+        $content = $this->getContent();
+
+        $list = $this->makeList();
+
+        if (!empty($list)) {
+            $content .= $list;
+        }
+
+        $end = $this->getEnd();
+
+        if (!empty($end)) {
+            $content .= $list;
+        }
+
+        return $content;
+
+        // return "{$this->getContent()}\n{$this->makeList()}\n{$this->getEnd()}";
     }
 
     /**
