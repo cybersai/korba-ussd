@@ -211,13 +211,13 @@ class View {
         $list = $this->makeList();
 
         if (!empty($list)) {
-            $content .= $list;
+            $content .= "\n" . $list;
         }
 
         $end = $this->getEnd();
 
         if (!empty($end)) {
-            $content .= $list;
+            $content .= "\n" . $end;
         }
 
         return $content;
