@@ -392,11 +392,12 @@ class XChangeV1 extends API
         return $this->call('gwcl_customer_lookup/', $data);
     }
 
-    public function gwcl_pay($gwcl_transaction_id, $amount, $callback_url, $description = null) {
+    public function gwcl_pay($transaction_id, $gwcl_transaction_id, $amount, $callback_url, $description = null) {
         $data = [
-            'transaction_id' => $gwcl_transaction_id,
+            'transaction_id' => $transaction_id,
             'amount' => $amount,
-            'callback_url' => $callback_url
+            'callback_url' => $callback_url,
+            'gwcl_lookup_session_id' => $gwcl_transaction_id,
         ];
         $opt_data = ['description' => $description];
         $this->add_optional_data($data, $opt_data);
